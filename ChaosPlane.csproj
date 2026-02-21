@@ -54,4 +54,10 @@
     <!-- FailureConfig.json is user-written at runtime; not shipped -->
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\FailureCatalogue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
