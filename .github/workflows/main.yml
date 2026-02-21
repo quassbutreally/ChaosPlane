@@ -1,0 +1,32 @@
+name: Sync Failure Catalogue to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ChaosPlane/Data/FailureCatalogue.json'
+      - 'docs/**'
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Copy catalogue to docs
+        run: cp ChaosPlane/Data/FailureCatalogue.json docs/FailureCatalogue.json
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/FailureCatalogue.json
+          git diff --cached --quiet || git commit -m "chore: sync FailureCatalogue.json to docs"
+          git push
