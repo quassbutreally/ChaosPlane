@@ -32,6 +32,9 @@ public sealed partial class SettingsDialog : ContentDialog
         var authUrl = App.TwitchService.BuildAuthUrl(LocalOAuthListener.RedirectUri);
         Windows.System.Launcher.LaunchUriAsync(new Uri(authUrl));
 
+        // WinUI only allows one ContentDialog open at a time — hide settings first
+        this.Hide();
+
         var waitDialog = new ContentDialog
         {
             Title           = "Authorise in Browser",
@@ -53,6 +56,9 @@ public sealed partial class SettingsDialog : ContentDialog
             if (!string.IsNullOrEmpty(token))
                 await App.MainViewModel.ApplyOAuthTokenAsync(token);
         }
+
+        // Re-open settings so the user can see the updated connection status
+        await this.ShowAsync();
     }
 }
 

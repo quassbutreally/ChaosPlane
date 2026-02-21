@@ -29,10 +29,6 @@
                         VerticalAlignment="Center"
                         Margin="16,0,0,0"
                         Spacing="8">
-                <TextBlock Text="✈"
-                           FontSize="16"
-                           Foreground="{StaticResource CpAmberBrush}"
-                           VerticalAlignment="Center" />
                 <TextBlock Text="CHAOSPLANE"
                            FontFamily="Consolas"
                            FontSize="13"
@@ -118,37 +114,45 @@
                                Margin="16,0,16,12" />
 
                     <Button x:Name="NavDashboard"
-                            Content="⬤  DASHBOARD"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"
                             Style="{StaticResource CpButtonStyle}"
                             Margin="8,0"
                             Padding="12,10"
                             Click="NavDashboard_Click"
-                            BorderThickness="0"
-                            CornerRadius="2" />
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Spacing="5" >
+                            <SymbolIcon Symbol="Home" VerticalAlignment="Center"/>
+                            <TextBlock Text="DASHBOARD" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
                     <Button x:Name="NavFailureBrowser"
-                            Content="≡  FAILURE BROWSER"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"
                             Style="{StaticResource CpButtonStyle}"
                             Margin="8,0"
                             Padding="12,10"
                             Click="NavFailureBrowser_Click"
-                            BorderThickness="0"
-                            CornerRadius="2" />
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Spacing="5" >
+                            <SymbolIcon Symbol="Library" VerticalAlignment="Center"/>
+                            <TextBlock Text="FAILURE BROWSER" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
-                    <Button Content="⚙  SETTINGS"
-                            HorizontalAlignment="Stretch"
+                    <Button HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"
                             Style="{StaticResource CpButtonStyle}"
                             Margin="8,0"
                             Padding="12,10"
                             Click="NavSettings_Click"
-                            BorderThickness="0"
-                            CornerRadius="2"
-                            Opacity="0.6" />
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Spacing="5" >
+                            <SymbolIcon Symbol="Setting" VerticalAlignment="Center"/>
+                            <TextBlock Text="SETTINGS" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
                     <!-- Divider -->
                     <Border Height="1"
