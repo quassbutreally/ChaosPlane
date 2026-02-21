@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>ChaosPlane</RootNamespace>
+    <AssemblyName>ChaosPlane</AssemblyName>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <!-- Unpackaged: no MSIX, just run the exe -->
+    <WindowsPackageType>None</WindowsPackageType>
+    <SelfContained>false</SelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
+    <EnableMsixTooling>true</EnableMsixTooling>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WinUI 3 via Windows App SDK -->
+    <PackageReference Include="Microsoft.WindowsAppSDK"        Version="1.8.260209005"    />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" />
+
+
+
+    <!-- MVVM toolkit -->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+
+    <!-- WebView2 for embedded OAuth browser -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
+
+    <!-- Twitch -->
+    <PackageReference Include="TwitchLib.Api"                Version="3.10.1" />
+    <PackageReference Include="TwitchLib.EventSub.Websockets" Version="0.8.0"  />
+    <PackageReference Include="TwitchLib.Client"             Version="3.4.0"  />
+
+    <!-- JSON -->
+    <PackageReference Include="System.Text.Json" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Shipped read-only catalogue -->
+    <Content Include="Data\FailureCatalogue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Default app settings -->
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- FailureConfig.json is user-written at runtime; not shipped -->
+  </ItemGroup>
+
+</Project>

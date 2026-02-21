@@ -1,0 +1,40 @@
+﻿{
+  "Twitch": {
+    "ClientId": "YOUR_TWITCH_CLIENT_ID",
+    "ChannelName": "",
+    "BroadcasterUserId": "",
+    "AccessToken": "",
+    "RewardIds": {
+      "Minor": "",
+      "Moderate": "",
+      "Severe": "",
+      "PickYourPoison": ""
+    }
+  },
+  "XPlane": {
+    "Host": "localhost",
+    "Port": 8086
+  },
+  "Rewards": {
+    "Minor": {
+      "Title": "🟢 Minor Failure",
+      "Cost": 500,
+      "Enabled": true
+    },
+    "Moderate": {
+      "Title": "🟡 Moderate Failure",
+      "Cost": 2000,
+      "Enabled": true
+    },
+    "Severe": {
+      "Title": "🔴 Severe Failure",
+      "Cost": 5000,
+      "Enabled": true
+    },
+    "PickYourPoison": {
+      "Title": "☠️ Pick Your Poison",
+      "Cost": 10000,
+      "Enabled": true
+    }
+  }
+}

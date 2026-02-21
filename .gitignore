@@ -1,0 +1,46 @@
+﻿# Build output
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+
+# App settings — contains Twitch client ID, access token, channel name
+# Commit appsettings.template.json instead
+ChaosPlane/appsettings.json
+
+# User failure config — generated at runtime, specific to each user's setup
+AppData/
+
+# Local config
+appsettings.json
+
+# Windows App SDK / WinUI build artefacts
+_manifest/
+AppPackages/
+BundleArtifacts/
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+*.appxsym
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
