@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'ChaosPlane/Data/FailureCatalogue.json'
-      - 'docs/**'
+      - 'Data/FailureCatalogue.json'
+      - 'Docs/**'
 
   # Allow manual trigger from the Actions tab
   workflow_dispatch:
