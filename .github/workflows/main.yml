@@ -5,7 +5,7 @@ on:
     branches: [master]
     paths:
       - 'Data/FailureCatalogue.json'
-      - 'Docs/**'
+      - 'docs/**'
 
   workflow_dispatch:
 
