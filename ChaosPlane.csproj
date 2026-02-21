@@ -44,11 +44,11 @@
 
   <ItemGroup>
     <!-- Shipped read-only catalogue -->
-    <Content Include="Data\FailureCatalogue.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <!-- Default app settings -->
     <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Docs\FailureCatalogue.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <!-- FailureConfig.json is user-written at runtime; not shipped -->

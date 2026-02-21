@@ -1,8 +1,5 @@
 {
   "Failures": [
-
-    // ── ATA 21 — Air Conditioning ───────────────────────────────────────────
-
     {
       "Id": "cpc_failed",
       "Name": "Cabin Pressure Controller Failed",
@@ -162,10 +159,7 @@
       "Category": "ATA 21 — Air Conditioning",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/aircond/leak/fast/state", "Value": 1 }]
-    },
-
-    // ── ATA 22 — Auto Flight ────────────────────────────────────────────────
-
+    },        
     {
       "Id": "fcc1a_failed",
       "Name": "Flight Control Computer 1A Failed",
@@ -296,10 +290,7 @@
         { "Dataref": "CL650/failures/systems/afcs/yd/1/failed/state", "Value": 1 },
         { "Dataref": "CL650/failures/systems/afcs/yd/2/failed/state", "Value": 1 }
       ]
-    },
-
-    // ── ATA 23 — Communications ─────────────────────────────────────────────
-
+    },        
     {
       "Id": "xpdr1_failed",
       "Name": "Transponder 1 / TCAS Failed",
@@ -379,10 +370,7 @@
       "Category": "ATA 23 — Communications",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/comm/cmu/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 24 — Electrical ─────────────────────────────────────────────────
-
+    },        
     {
       "Id": "ac_gen1_failed",
       "Name": "AC Generator 1 Failed",
@@ -526,10 +514,7 @@
       "Category": "ATA 24 — Electrical",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/apu_batt/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 26 — Fire Protection ────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng1_zone_a_fire_ext1",
       "Name": "Engine 1 Zone A Fire (1-Shot Extinguishable)",
@@ -625,10 +610,7 @@
       "Category": "ATA 26 — Fire Protection",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/apu/fire_non_ext/state", "Value": 1 }]
-    },
-
-    // ── ATA 27 — Flight Controls ────────────────────────────────────────────
-
+    },        
     {
       "Id": "rudpedal_left_jammed",
       "Name": "Left Rudder Pedals Jammed",
@@ -844,10 +826,7 @@
       "Category": "ATA 27 — Flight Controls",
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/systems/fctl/sps/aoa/2/false_high/state", "Value": 1 }]
-    },
-
-    // ── ATA 28 — Fuel ───────────────────────────────────────────────────────
-
+    },        
     {
       "Id": "fuel_tank_aux_leak_slow",
       "Name": "Auxiliary Fuel Tank Slow Leak",
@@ -943,10 +922,7 @@
       "Category": "ATA 28 — Fuel",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/fuel/pump/primary/right/state", "Value": 1 }]
-    },
-
-    // ── ATA 29 — Hydraulics ─────────────────────────────────────────────────
-
+    },        
     {
       "Id": "hyd1_leak_slow",
       "Name": "Hydraulic System 1 Slow Leak",
@@ -1042,10 +1018,7 @@
       "Category": "ATA 29 — Hydraulics",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/hyd/3/pump/B/state", "Value": 1 }]
-    },
-
-    // ── ATA 30 — Ice and Rain Protection ────────────────────────────────────
-
+    },        
     {
       "Id": "pitot_heat_left_failed",
       "Name": "Pilot Pitot-Static Heat Failed",
@@ -1157,11 +1130,7 @@
       "Category": "ATA 30 — Ice & Rain Protection",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/ice_det/1/nodet/state", "Value": 1 }]
-    },
-
-    // ── ATA 31 — Indicating and Recording ───────────────────────────────────
-
-    {
+    },{
       "Id": "reu1_failed",
       "Name": "Remote Electronic Unit 1 Failed",
       "Description": "REU 1 has failed. Multiple EICAS indications may be lost or erroneous.",
@@ -1192,11 +1161,7 @@
       "Category": "ATA 31 — Indicating & Recording",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/indrec/dcu/1b/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 32 — Landing Gear ───────────────────────────────────────────────
-
-    {
+    },{
       "Id": "nscu_failed",
       "Name": "Nosewheel Steering Control Unit Failed",
       "Description": "NSCU has failed. Nosewheel steering is unavailable — use differential braking for ground directional control.",
@@ -1284,10 +1249,7 @@
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/systems/gear/main/right/leg/uplock/open/state", "Value": 1 }]
     },
-
-    // ── ATA 34 — Navigation ─────────────────────────────────────────────────
-
-    {
+{
       "Id": "pitot1_blocked",
       "Name": "ADC 1 Pitot Tube Blocked",
       "Description": "ADC 1 pitot tube is blocked. Pilot-side airspeed indication will be stuck or zero.",
@@ -1574,10 +1536,7 @@
       "Category": "ATA 34 — Navigation",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/avionics/fms/cdu/2/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 35 — Oxygen ─────────────────────────────────────────────────────
-
+    }, 
     {
       "Id": "oxygen_mask_left_blocked",
       "Name": "Left Oxygen Mask Blocked",
@@ -1609,10 +1568,7 @@
       "Category": "ATA 35 — Oxygen",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/oxygen/tank/leak/fast/state", "Value": 1 }]
-    },
-
-    // ── ATA 36 — Pneumatics ─────────────────────────────────────────────────
-
+    },        
     {
       "Id": "pneu_10th_sov_left_stuck",
       "Name": "Left 10th Stage Bleed SOV Stuck",
@@ -1644,10 +1600,7 @@
       "Category": "ATA 36 — Pneumatic",
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/systems/pneu/14th/wai/right/stuck/state", "Value": 1 }]
-    },
-
-    // ── ATA 49 — APU ────────────────────────────────────────────────────────
-
+    },        
     {
       "Id": "apu_starter_failed",
       "Name": "APU Starter Failed",
@@ -1671,10 +1624,7 @@
       "Category": "ATA 49 — APU",
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/systems/apu/control/overspeed/state", "Value": 1 }]
-    },
-
-    // ── ATA 72 — Engine ─────────────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_n1_vib_high",
       "Name": "Left Engine N1 Vibration High",
@@ -1826,10 +1776,7 @@
       "Category": "ATA 72 — Engine",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/compr/rotor/locked/state", "Value": 1 }]
-    },
-
-    // ── ATA 73 — Engine Fuel and Control ────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_fcu_erratic",
       "Name": "Left Engine Fuel Control Erratic",
@@ -1893,10 +1840,7 @@
       "Category": "ATA 73 — Engine Fuel & Control",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/n1ctl/stuck/state", "Value": 1 }]
-    },
-
-    // ── ATA 74 — Ignition ───────────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_ign_a_failed",
       "Name": "Left Engine Ignition System A Failed",
@@ -1928,10 +1872,7 @@
       "Category": "ATA 74 — Ignition",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ign/B/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 76 — Engine Control ─────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_thro_jammed",
       "Name": "Left Thrust Lever Jammed",
@@ -1963,10 +1904,7 @@
       "Category": "ATA 76 — Engine Control",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ctl/thro/broken/state", "Value": 1 }]
-    },
-
-    // ── ATA 77 — Engine Indicating ──────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_n1_ind_failed",
       "Name": "Left Engine N1 Indication Failed",
@@ -2022,10 +1960,7 @@
       "Category": "ATA 77 — Engine Indicating",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ind/itt/failed/state", "Value": 1 }]
-    },
-
-    // ── ATA 78 — Exhaust (Thrust Reversers) ─────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_rev_jammed",
       "Name": "Left Reverser Jammed in Position",
@@ -2073,10 +2008,7 @@
       "Category": "ATA 78 — Exhaust",
       "SuggestedTier": "Severe",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/rev/deploy/state", "Value": 1 }]
-    },
-
-    // ── ATA 79 — Oil ────────────────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_oil_pump_failed",
       "Name": "Left Engine Oil Pump Failed",
@@ -2124,10 +2056,7 @@
       "Category": "ATA 79 — Oil",
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/oil/burning/state", "Value": 1 }]
-    },
-
-    // ── ATA 80 — Starting ───────────────────────────────────────────────────
-
+    },        
     {
       "Id": "eng_left_start_hung",
       "Name": "Left Engine Hung Start",
@@ -2159,10 +2088,7 @@
       "Category": "ATA 80 — Starting",
       "SuggestedTier": "Minor",
       "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/start/hot/state", "Value": 1 }]
-    },
-
-    // ── Environmental ───────────────────────────────────────────────────────
-
+    },        
     {
       "Id": "birdstrike_windshield",
       "Name": "Birdstrike — Left Windshield",
@@ -2242,7 +2168,6 @@
       "Category": "Environmental",
       "SuggestedTier": "Moderate",
       "Actions": [{ "Dataref": "CL650/failures/env/smoke/baggage/state", "Value": 1 }]
-    }
-
+    }  
   ]
 }
