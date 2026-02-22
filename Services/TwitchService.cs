@@ -24,8 +24,8 @@ public class TwitchService : IAsyncDisposable
     private readonly AppSettings _settings;
     private readonly SettingsService _settingsService;
 
-    private TwitchAPI?             _api;
-    private TwitchClient?          _chatClient;
+    private TwitchAPI?               _api;
+    private TwitchClient?            _chatClient;
     private EventSubWebsocketClient? _eventSub;
 
     private bool _connected;
@@ -63,7 +63,7 @@ public class TwitchService : IAsyncDisposable
     // ── OAuth ─────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Returns the OAuth authorisation URL to open in the embedded WebView2.
+    /// Returns the OAuth authorisation URL to open in the browser.
     /// Scopes required:
     ///   channel:manage:redemptions — create/update/refund rewards
     ///   channel:read:redemptions   — receive redemption events
@@ -80,7 +80,7 @@ public class TwitchService : IAsyncDisposable
     }
 
     /// <summary>
-    /// Called after WebView2 captures the access token from the redirect URI fragment.
+    /// Called after the local OAuth listener captures the access token.
     /// Validates the token, stores it, and fetches the broadcaster user ID.
     /// </summary>
     public async Task<bool> ApplyTokenAsync(string accessToken)
@@ -94,9 +94,9 @@ public class TwitchService : IAsyncDisposable
             var validation = await _api.Auth.ValidateAccessTokenAsync(accessToken);
             if (validation == null) return false;
 
-            _settings.Twitch.AccessToken        = accessToken;
-            _settings.Twitch.ChannelName        = validation.Login;
-            _settings.Twitch.BroadcasterUserId  = validation.UserId;
+            _settings.Twitch.AccessToken       = accessToken;
+            _settings.Twitch.ChannelName       = validation.Login;
+            _settings.Twitch.BroadcasterUserId = validation.UserId;
 
             await _settingsService.SaveAsync();
             return true;
@@ -171,10 +171,10 @@ public class TwitchService : IAsyncDisposable
 
         var ids = _settings.Twitch.RewardIds;
 
-        ids.Minor         = await UpsertRewardAsync(ids.Minor,         _settings.Rewards.Minor,        requiresInput: false);
-        ids.Moderate      = await UpsertRewardAsync(ids.Moderate,      _settings.Rewards.Moderate,     requiresInput: false);
-        ids.Severe        = await UpsertRewardAsync(ids.Severe,        _settings.Rewards.Severe,       requiresInput: false);
-        ids.PickYourPoison = await UpsertRewardAsync(ids.PickYourPoison, _settings.Rewards.PickYourPoison, requiresInput: true);
+        ids.Minor          = await UpsertRewardAsync(ids.Minor,          _settings.Rewards.Minor,          requiresInput: false);
+        ids.Moderate       = await UpsertRewardAsync(ids.Moderate,       _settings.Rewards.Moderate,       requiresInput: false);
+        ids.Severe         = await UpsertRewardAsync(ids.Severe,         _settings.Rewards.Severe,         requiresInput: false);
+        ids.PickYourPoison = await UpsertRewardAsync(ids.PickYourPoison,  _settings.Rewards.PickYourPoison, requiresInput: true);
 
         await _settingsService.SaveAsync();
     }
@@ -190,10 +190,10 @@ public class TwitchService : IAsyncDisposable
             {
                 var updateRequest = new UpdateCustomRewardRequest
                 {
-                    Title                 = config.Title,
-                    Cost                  = config.Cost,
-                    IsEnabled             = config.Enabled,
-                    IsUserInputRequired   = requiresInput
+                    Title               = config.Title,
+                    Cost                = config.Cost,
+                    IsEnabled           = config.Enabled,
+                    IsUserInputRequired = requiresInput
                 };
 
                 await _api!.Helix.ChannelPoints.UpdateCustomRewardAsync(
@@ -207,20 +207,38 @@ public class TwitchService : IAsyncDisposable
             }
         }
 
-        // Create new reward
-        var createRequest = new CreateCustomRewardsRequest
+        // Try to create new reward
+        try
         {
-            Title               = config.Title,
-            Cost                = config.Cost,
-            IsEnabled           = config.Enabled,
-            IsUserInputRequired = requiresInput,
-            ShouldRedemptionsSkipRequestQueue = false
-        };
+            var createRequest = new CreateCustomRewardsRequest
+            {
+                Title               = config.Title,
+                Cost                = config.Cost,
+                IsEnabled           = config.Enabled,
+                IsUserInputRequired = requiresInput,
+                ShouldRedemptionsSkipRequestQueue = false
+            };
 
-        var response = await _api!.Helix.ChannelPoints.CreateCustomRewardsAsync(
-            broadcasterId, createRequest);
+            var response = await _api!.Helix.ChannelPoints.CreateCustomRewardsAsync(
+                broadcasterId, createRequest);
 
-        return response.Data[0].Id;
+            return response.Data[0].Id;
+        }
+        catch
+        {
+            // Creation failed — likely a duplicate title. Query Twitch for the
+            // existing reward by name and recover its ID.
+            var existing = await _api!.Helix.ChannelPoints.GetCustomRewardAsync(
+                broadcasterId, onlyManageableRewards: true);
+
+            var match = existing.Data.FirstOrDefault(r =>
+                r.Title.Equals(config.Title, StringComparison.OrdinalIgnoreCase));
+
+            if (match != null)
+                return match.Id;
+
+            throw; // Unknown error — re-throw so the caller knows something went wrong
+        }
     }
 
     // ── Chat ──────────────────────────────────────────────────────────────────
@@ -323,8 +341,8 @@ public class TwitchService : IAsyncDisposable
     {
         _eventSub = new EventSubWebsocketClient();
 
-        _eventSub.WebsocketConnected    += OnWebsocketConnected;
-        _eventSub.WebsocketDisconnected += OnWebsocketDisconnected;
+        _eventSub.WebsocketConnected                     += OnWebsocketConnected;
+        _eventSub.WebsocketDisconnected                  += OnWebsocketDisconnected;
         _eventSub.ChannelPointsCustomRewardRedemptionAdd += OnRedemptionAsync;
 
         await _eventSub.ConnectAsync();
@@ -334,7 +352,21 @@ public class TwitchService : IAsyncDisposable
     {
         if (!e.IsRequestedReconnect)
         {
-            // Subscribe to redemption events for our broadcaster
+            // Delete any stale subscriptions for this event type before creating a new one.
+            // This prevents duplicate triggers if ConnectAsync is called more than once.
+            try
+            {
+                var existing = await _api!.Helix.EventSub.GetEventSubSubscriptionsAsync(
+                    type: "channel.channel_points_custom_reward_redemption.add");
+
+                foreach (var sub in existing.Subscriptions)
+                    await _api.Helix.EventSub.DeleteEventSubSubscriptionAsync(sub.Id);
+            }
+            catch
+            {
+                // Non-fatal — proceed with creating the subscription regardless
+            }
+
             await _api!.Helix.EventSub.CreateEventSubSubscriptionAsync(
                 "channel.channel_points_custom_reward_redemption.add",
                 "1",
@@ -343,7 +375,7 @@ public class TwitchService : IAsyncDisposable
                     ["broadcaster_user_id"] = _settings.Twitch.BroadcasterUserId
                 },
                 TwitchLib.Api.Core.Enums.EventSubTransportMethod.Websocket,
-                _eventSub.SessionId);
+                _eventSub!.SessionId);
         }
     }
 
@@ -356,12 +388,12 @@ public class TwitchService : IAsyncDisposable
 
     private async Task OnRedemptionAsync(object sender, ChannelPointsCustomRewardRedemptionArgs e)
     {
-        var notification  = e.Payload.Event;
-        var rewardId      = notification.Reward.Id;
-        var redemptionId  = notification.Id;
-        var viewerName    = notification.UserName; // display name
-        var userInput     = notification.UserInput ?? string.Empty;
-        var ids           = _settings.Twitch.RewardIds;
+        var notification = e.Payload.Event;
+        var rewardId     = notification.Reward.Id;
+        var redemptionId = notification.Id;
+        var viewerName   = notification.UserName;
+        var userInput    = notification.UserInput ?? string.Empty;
+        var ids          = _settings.Twitch.RewardIds;
 
         if (rewardId == ids.PickYourPoison)
         {
