@@ -43,7 +43,6 @@ public class SettingsService
             if (loaded == null) return;
 
             // Mutate the existing object so all services holding a reference stay in sync
-            Settings.Twitch.ClientId          = loaded.Twitch.ClientId;
             Settings.Twitch.ChannelName       = loaded.Twitch.ChannelName;
             Settings.Twitch.BroadcasterUserId = loaded.Twitch.BroadcasterUserId;
             Settings.Twitch.AccessToken       = loaded.Twitch.AccessToken;

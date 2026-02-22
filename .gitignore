@@ -27,6 +27,7 @@ AppData/
 
 # Local config
 appsettings.json
+Secrets.cs
 
 # Windows App SDK / WinUI build artefacts
 _manifest/

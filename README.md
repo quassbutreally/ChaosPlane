@@ -4,8 +4,6 @@ A Twitch channel points integration for X-Plane 12 that lets viewers trigger fai
 
 Viewers redeem channel point rewards to inflict failures on the aircraft — blocked pitot tubes, hydraulic faults, electrical failures, and more. The host can also trigger failures manually and reset them from the dashboard.
 
-![Dashboard screenshot showing active failures and redemption log](.github/screenshot.png)
-
 ---
 
 ## Features
@@ -25,58 +23,29 @@ Viewers redeem channel point rewards to inflict failures on the aircraft — blo
 - Windows 10 (1809) or later
 - [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Windows App SDK 1.5 Runtime](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads)
-- X-Plane 12.1.1 or later (for the REST API)
+- X-Plane 12.1.1 or later (REST API enabled by default)
 - A Twitch account with channel points enabled
-
----
-
-## Setup
-
-### 1. Twitch application
-
-Create a Twitch application at [dev.twitch.tv/console](https://dev.twitch.tv/console):
-
-- **OAuth Redirect URL:** `http://localhost:7842/chaosplane/callback`
-- **Category:** Application Integration
-
-Copy your **Client ID** — you'll need it in the next step.
-
-### 2. Configuration
-
-Copy `ChaosPlane/appsettings.template.json` to `ChaosPlane/appsettings.json` and fill in your Client ID:
-
-```json
-{
-  "Twitch": {
-    "ClientId": "your_client_id_here",
-    ...
-  }
-}
-```
-
-Everything else (access token, reward IDs, channel name) is populated automatically through the app.
-
-### 3. X-Plane
-
-Make sure the X-Plane REST API is enabled. It's on by default from 12.1.1 onwards. Check **Settings → Network** and ensure "Disable Incoming Traffic" is not selected.
-
-### 4. First run
-
-1. Launch ChaosPlane
-2. Open **Settings** and click **Ping X-Plane** to verify the connection
-3. Click **Connect Twitch** and complete the OAuth flow in your browser
-4. Click **Push to Twitch** to create the channel point rewards on your channel
-5. Open **Failure Browser**, assign tiers to the failures you want to enable, and click **Save**
 
 ---
 
 ## Building from source
 
-Requires Visual Studio 2022 with the **Windows application development** workload (or VS Build Tools with the WinUI component).
+Requires Visual Studio 2022 (or Rider) with the **Windows application development** workload.
 
 ```
-git clone https://github.com/yourusername/chaosplane.git
+git clone https://github.com/quassbutreally/chaosplane.git
 cd chaosplane
+```
+
+Before building, create `ChaosPlane/Secrets.cs` from the template:
+
+```
+copy ChaosPlane\Secrets.template.cs ChaosPlane\Secrets.cs
+```
+
+Then open `Secrets.cs` and fill in your Twitch Client ID from [dev.twitch.tv/console](https://dev.twitch.tv/console). The redirect URI for your app should be `http://localhost:7842/chaosplane/callback`.
+
+```
 dotnet build
 ```
 
@@ -104,7 +73,7 @@ LocalOAuthListener   — Local HTTP server for OAuth redirect capture
 
 ## Failure catalogue
 
-The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapters:
+The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapters. Browse them at [quassbutreally.github.io/chaosplane](https://quassbutreally.github.io/chaosplane).
 
 | Chapter | System |
 |---------|--------|
@@ -112,7 +81,6 @@ The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapte
 | ATA 22 | Auto Flight |
 | ATA 23 | Communications |
 | ATA 24 | Electrical Power |
-| ATA 25 | Equipment / Furnishings |
 | ATA 26 | Fire Protection |
 | ATA 27 | Flight Controls |
 | ATA 28 | Fuel |
@@ -120,13 +88,11 @@ The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapte
 | ATA 30 | Ice & Rain Protection |
 | ATA 31 | Instruments |
 | ATA 32 | Landing Gear |
-| ATA 33 | Lights |
 | ATA 34 | Navigation |
 | ATA 35 | Oxygen |
 | ATA 36 | Pneumatic |
 | ATA 49 | APU |
-
-Each failure maps to one or more X-Plane datarefs under `CL650/failures/...`.
+| ATA 72–80 | Engine |
 
 ---
 

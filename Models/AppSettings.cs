@@ -9,12 +9,6 @@ public class AppSettings
 
 public class TwitchSettings
 {
-    /// <summary>
-    /// Your Twitch application Client ID from dev.twitch.tv.
-    /// Must be set before OAuth will work.
-    /// </summary>
-    public string ClientId { get; set; } = string.Empty;
-
     public string ChannelName      { get; set; } = string.Empty;
     public string BroadcasterUserId { get; set; } = string.Empty;
 
@@ -56,10 +50,10 @@ public class XPlaneSettings
 
 public class RewardsSettings
 {
-    public RewardConfig Minor        { get; set; } = new() { Title = "🟢 Minor Failure",    Cost = 5000   };
-    public RewardConfig Moderate     { get; set; } = new() { Title = "🟡 Moderate Failure", Cost = 10000  };
-    public RewardConfig Severe       { get; set; } = new() { Title = "🔴 Severe Failure",   Cost = 20000  };
-    public RewardConfig PickYourPoison { get; set; } = new() { Title = "☠️ Pick Your Poison", Cost = 50000 };
+    public RewardConfig Minor        { get; set; } = new() { Title = "🟢 Minor Failure",    Cost = 500   };
+    public RewardConfig Moderate     { get; set; } = new() { Title = "🟡 Moderate Failure", Cost = 2000  };
+    public RewardConfig Severe       { get; set; } = new() { Title = "🔴 Severe Failure",   Cost = 5000  };
+    public RewardConfig PickYourPoison { get; set; } = new() { Title = "☠️ Pick Your Poison", Cost = 10000 };
 
     public RewardConfig GetForTier(FailureTier tier) => tier switch
     {

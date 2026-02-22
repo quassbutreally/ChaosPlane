@@ -12,10 +12,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <!-- Unpackaged: no MSIX, just run the exe -->
-    <WindowsPackageType>None</WindowsPackageType>
-    <SelfContained>false</SelfContained>
-    <WindowsPackageType>None</WindowsPackageType>
     <EnableMsixTooling>true</EnableMsixTooling>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
@@ -58,6 +54,52 @@
     <None Update="Data\FailureCatalogue.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Remove="ChaosPlane\TwitchLib.EventSub.Core.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Communication.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Client.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Helix.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Helix.Models.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Core.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Core.Models.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Core.Interfaces.dll" />
+    <None Remove="ChaosPlane\TwitchLib.Api.Core.Enums.dll" />
+    <None Remove="ChaosPlane\System.Numerics.Tensors.dll" />
+    <None Remove="ChaosPlane\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
+    <None Remove="ChaosPlane\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.Widgets.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.System.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.System.Power.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.Storage.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.SDK.NET.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.PushNotifications.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.Media.Capture.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.Management.Deployment.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.Foundation.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.ApplicationModel.Background.UniversalBGTask.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.AI.Text.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.AI.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.AI.MachineLearning.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.AI.Imaging.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Windows.AI.ContentSafety.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.WinUI.dll" />
+    <None Remove="ChaosPlane\Microsoft.Web.WebView2.Core.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Security.Authentication.OAuth.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.InteractiveExperiences.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Graphics.Imaging.Projection.dll" />
+    <None Remove="ChaosPlane\Microsoft.Extensions.Logging.Abstractions.dll" />
+    <None Remove="ChaosPlane\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+    <None Remove="ChaosPlane\CommunityToolkit.Mvvm.dll" />
+    <None Remove="ChaosPlane\ChaosPlane.pri" />
+    <None Remove="ChaosPlane\ChaosPlane.pdb" />
+    <None Remove="ChaosPlane\ChaosPlane.exe" />
+    <None Remove="ChaosPlane\ChaosPlane.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ChaosPlane\Data\" />
   </ItemGroup>
 
 </Project>
