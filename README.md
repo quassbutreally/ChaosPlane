@@ -73,7 +73,7 @@ LocalOAuthListener   — Local HTTP server for OAuth redirect capture
 
 ## Failure catalogue
 
-The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapters. Browse them at [quassbutreally.github.io/chaosplane](https://quassbutreally.github.io/chaosplane).
+The `Data/FailureCatalogue.json` file contains 271 failures across 17 ATA chapters. Browse them at [quassbutreally.github.io/chaosplane](https://quassbutreally.github.io/ChaosPlane/).
 
 | Chapter | System |
 |---------|--------|
