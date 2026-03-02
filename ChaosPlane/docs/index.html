@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChaosPlane — Failure Catalogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:         #0D0F0E;
+      --panel:      #141918;
+      --raised:     #1C2320;
+      --border:     #2A3530;
+      --amber:      #FFA500;
+      --amber-dim:  #7A5000;
+      --amber-glow: rgba(255,165,0,0.08);
+      --green:      #69FF47;
+      --yellow:     #FFCC00;
+      --red:        #FF3D3D;
+      --text:       #D4DDD8;
+      --text-dim:   #6E847A;
+      --text-muted: #3D4F47;
+      --mono:       'Share Tech Mono', monospace;
+      --sans:       'Barlow', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle scan-line overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────────── */
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      background: var(--panel);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wordmark-icon {
+      font-size: 18px;
+      color: var(--amber);
+    }
+
+    .wordmark-text {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--amber);
+      letter-spacing: 0.15em;
+    }
+
+    .wordmark-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 32px;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--amber);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────────── */
+
+    .hero {
+      border-bottom: 1px solid var(--border);
+      padding: 48px 40px 40px;
+      background: linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: 'FAILURE CATALOGUE';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      opacity: 0.4;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: var(--mono);
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-dim);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* ── Tier pills ──────────────────────────────────────────────────────── */
+
+    .tier-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 2px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      border: 1px solid;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .tier-pill:hover { opacity: 0.75; }
+    .tier-pill.active { opacity: 1; }
+    .tier-pill.inactive { opacity: 0.3; }
+
+    .tier-pill.minor    { color: var(--green);  border-color: var(--green);  background: rgba(105,255,71,0.06); }
+    .tier-pill.moderate { color: var(--yellow); border-color: var(--yellow); background: rgba(255,204,0,0.06); }
+    .tier-pill.severe   { color: var(--red);    border-color: var(--red);    background: rgba(255,61,61,0.06); }
+    .tier-pill.all      { color: var(--amber);  border-color: var(--amber-dim); background: var(--amber-glow); }
+
+    .tier-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .tier-dot.minor    { background: var(--green); }
+    .tier-dot.moderate { background: var(--yellow); }
+    .tier-dot.severe   { background: var(--red); }
+
+    /* ── Controls ────────────────────────────────────────────────────────── */
+
+    .controls {
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      position: sticky;
+      top: 56px;
+      z-index: 99;
+    }
+
+    .controls-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+
+    .search-wrap::before {
+      content: '⌕';
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      background: var(--raised);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 12px 8px 32px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="search"]:focus {
+      border-color: var(--amber-dim);
+    }
+
+    input[type="search"]::placeholder {
+      color: var(--text-muted);
+    }
+
+    .category-select {
+      background: var(--raised);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 8px 12px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .result-count {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .result-count span {
+      color: var(--amber);
+    }
+
+    /* ── Main content ────────────────────────────────────────────────────── */
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 40px 80px;
+    }
+
+    /* ── Chapter sections ────────────────────────────────────────────────── */
+
+    .chapter {
+      margin-bottom: 48px;
+      animation: fadeIn 0.3s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+
+    .chapter-count {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ── Failure grid ────────────────────────────────────────────────────── */
+
+    .failures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    /* ── Failure card ────────────────────────────────────────────────────── */
+
+    .failure-card {
+      background: var(--panel);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background 0.1s;
+      position: relative;
+    }
+
+    .failure-card:hover {
+      background: var(--raised);
+    }
+
+    .failure-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+    }
+
+    .failure-card.minor::before    { background: var(--green); }
+    .failure-card.moderate::before { background: var(--yellow); }
+    .failure-card.severe::before   { background: var(--red); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .failure-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .tier-badge {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      border-radius: 1px;
+      border: 1px solid;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tier-badge.minor    { color: var(--green);  border-color: var(--green);  background: rgba(105,255,71,0.08); }
+    .tier-badge.moderate { color: var(--yellow); border-color: var(--yellow); background: rgba(255,204,0,0.08); }
+    .tier-badge.severe   { color: var(--red);    border-color: var(--red);    background: rgba(255,61,61,0.08); }
+
+    .failure-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── Empty state ─────────────────────────────────────────────────────── */
+
+    .empty {
+      text-align: center;
+      padding: 80px 40px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .empty span { color: var(--amber); }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    footer a {
+      color: var(--amber-dim);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--amber); }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+
+    @media (max-width: 600px) {
+      header, .controls, .hero { padding-left: 20px; padding-right: 20px; }
+      main { padding: 24px 20px 60px; }
+      .header-stats { display: none; }
+      .failures-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="wordmark">
+        <span class="wordmark-icon">✈</span>
+        <div>
+          <div class="wordmark-text">CHAOSPLANE</div>
+          <div class="wordmark-sub">CL650 FAILURE SYSTEM</div>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-label">Failures</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="stat-chapters">—</div>
+          <div class="stat-label">Systems</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>FAILURE CATALOGUE</h1>
+      <p>All failures available for Twitch channel point redemptions on the Bombardier Challenger 650. Browse by system or search by name.</p>
+      <div class="tier-legend">
+        <button class="tier-pill all active" data-tier="all" onclick="filterTier('all', this)">
+          ALL TIERS
+        </button>
+        <button class="tier-pill minor" data-tier="Minor" onclick="filterTier('Minor', this)">
+          <span class="tier-dot minor"></span> MINOR
+        </button>
+        <button class="tier-pill moderate" data-tier="Moderate" onclick="filterTier('Moderate', this)">
+          <span class="tier-dot moderate"></span> MODERATE
+        </button>
+        <button class="tier-pill severe" data-tier="Severe" onclick="filterTier('Severe', this)">
+          <span class="tier-dot severe"></span> SEVERE
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search failures..." oninput="applyFilters()"/>
+      </div>
+      <select class="category-select" id="category-select" onchange="applyFilters()">
+        <option value="all">ALL SYSTEMS</option>
+      </select>
+      <div class="result-count" id="result-count"></div>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="empty">LOADING CATALOGUE...</div>
+  </main>
+
+  <footer>
+    <p>CHAOSPLANE &nbsp;·&nbsp; <a href="https://github.com/yourusername/chaosplane">GITHUB</a></p>
+  </footer>
+
+  <script>
+    let allFailures = [];
+    let activeTier  = 'all';
+
+    // ── Load catalogue ──────────────────────────────────────────────────────
+
+    async function loadCatalogue() {
+      try {
+        const res  = await fetch('FailureCatalogue.json');
+        const text = await res.text();
+
+        // Strip JS-style comments (the JSON has // comment lines)
+        const clean = text.replace(/\/\/[^\n]*/g, '');
+        const data  = JSON.parse(clean);
+
+        allFailures = data.Failures;
+        init();
+      } catch (e) {
+        document.getElementById('main-content').innerHTML =
+          `<div class="empty">FAILED TO LOAD CATALOGUE<br><span>${e.message}</span></div>`;
+      }
+    }
+
+    // ── Initialise ──────────────────────────────────────────────────────────
+
+    function init() {
+      // Stats
+      const categories = [...new Set(allFailures.map(f => f.Category))];
+      document.getElementById('stat-total').textContent    = allFailures.length;
+      document.getElementById('stat-chapters').textContent = categories.length;
+
+      // Populate category dropdown
+      const sel = document.getElementById('category-select');
+      categories.sort().forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value       = cat;
+        opt.textContent = cat.toUpperCase();
+        sel.appendChild(opt);
+      });
+
+      applyFilters();
+    }
+
+    // ── Filters ─────────────────────────────────────────────────────────────
+
+    function filterTier(tier, btn) {
+      activeTier = tier;
+      document.querySelectorAll('.tier-pill').forEach(p => {
+        p.classList.toggle('active',   p === btn);
+        p.classList.toggle('inactive', p !== btn);
+      });
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query    = document.getElementById('search').value.trim().toLowerCase();
+      const category = document.getElementById('category-select').value;
+
+      let filtered = allFailures;
+
+      if (activeTier !== 'all')
+        filtered = filtered.filter(f => f.SuggestedTier === activeTier);
+
+      if (category !== 'all')
+        filtered = filtered.filter(f => f.Category === category);
+
+      if (query)
+        filtered = filtered.filter(f =>
+          f.Name.toLowerCase().includes(query) ||
+          (f.Description && f.Description.toLowerCase().includes(query))
+        );
+
+      render(filtered);
+
+      const count = filtered.length;
+      document.getElementById('result-count').innerHTML =
+        `<span>${count}</span> / ${allFailures.length} FAILURES`;
+    }
+
+    // ── Render ───────────────────────────────────────────────────────────────
+
+    function render(failures) {
+      const main = document.getElementById('main-content');
+
+      if (failures.length === 0) {
+        main.innerHTML = `<div class="empty">NO FAILURES MATCH — <span>TRY DIFFERENT FILTERS</span></div>`;
+        return;
+      }
+
+      // Group by category
+      const byCategory = {};
+      failures.forEach(f => {
+        if (!byCategory[f.Category]) byCategory[f.Category] = [];
+        byCategory[f.Category].push(f);
+      });
+
+      const html = Object.entries(byCategory)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([category, items]) => `
+          <section class="chapter">
+            <div class="chapter-header">
+              <span class="chapter-title">${escHtml(category)}</span>
+              <span class="chapter-count">${items.length} FAILURE${items.length !== 1 ? 'S' : ''}</span>
+            </div>
+            <div class="failures-grid">
+              ${items.map(f => renderCard(f)).join('')}
+            </div>
+          </section>
+        `).join('');
+
+      main.innerHTML = html;
+    }
+
+    function renderCard(f) {
+      const tier = (f.SuggestedTier || 'minor').toLowerCase();
+      return `
+        <div class="failure-card ${tier}">
+          <div class="card-top">
+            <span class="failure-name">${escHtml(f.Name)}</span>
+            <span class="tier-badge ${tier}">${(f.SuggestedTier || '').toUpperCase()}</span>
+          </div>
+          ${f.Description ? `<p class="failure-desc">${escHtml(f.Description)}</p>` : ''}
+        </div>
+      `;
+    }
+
+    function escHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    loadCatalogue();
+  </script>
+</body>
+</html>

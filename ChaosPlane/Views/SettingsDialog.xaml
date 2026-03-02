@@ -1,0 +1,165 @@
+<ContentDialog
+    x:Class="ChaosPlane.Views.SettingsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    CloseButtonText="CLOSE"
+    Background="{StaticResource CpBgBrush}"
+    MinWidth="1000">
+
+    <StackPanel Spacing="20" Padding="4" Width="700">
+
+        <!-- ── Page header ───────────────────────────────────────────────── -->
+        <TextBlock Text="SETTINGS"
+                   FontFamily="Consolas"
+                   FontSize="{StaticResource CpFontSize2xl}"
+                   FontWeight="Bold"
+                   CharacterSpacing="100"
+                   Foreground="{StaticResource CpAmberBrush}" />
+
+        <!-- ── X-Plane + Twitch side by side ─────────────────────────────── -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- X-Plane -->
+            <Border Grid.Column="0" Style="{StaticResource CpCardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="X-PLANE CONNECTION"
+                               Style="{StaticResource CpSectionHeaderStyle}" />
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="HOST" Style="{StaticResource CpLabelStyle}" />
+                        <TextBox Style="{StaticResource CpTextBoxStyle}"
+                                 Text="{x:Bind ViewModel.XplaneHost, Mode=TwoWay}"
+                                 PlaceholderText="localhost" />
+                    </StackPanel>
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="PORT" Style="{StaticResource CpLabelStyle}" />
+                        <TextBox Style="{StaticResource CpTextBoxStyle}"
+                                 Text="{x:Bind ViewModel.XplanePort, Mode=TwoWay}"
+                                 PlaceholderText="8086" />
+                    </StackPanel>
+                    <Button Content="TEST CONNECTION"
+                            Style="{StaticResource CpButtonStyle}"
+                            Command="{x:Bind ViewModel.ConnectXPlaneCommand}" />
+                    <TextBlock Text="{x:Bind ViewModel.XplaneStatusText, Mode=OneWay}"
+                               Style="{StaticResource CpDimTextStyle}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Twitch -->
+            <Border Grid.Column="2" Style="{StaticResource CpCardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="TWITCH CONNECTION"
+                               Style="{StaticResource CpSectionHeaderStyle}" />
+                    <Button Content="CONNECT TWITCH"
+                            Style="{StaticResource CpGreenButtonStyle}"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.ConnectTwitchCommand}" />
+                    <Button Content="DISCONNECT"
+                            Style="{StaticResource CpDangerButtonStyle}"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.DisconnectTwitchCommand}" />
+                    <TextBlock Text="{x:Bind ViewModel.TwitchStatusText, Mode=OneWay}"
+                               Style="{StaticResource CpDimTextStyle}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ── Rewards ───────────────────────────────────────────────────── -->
+        <Border Style="{StaticResource CpCardStyle}">
+            <StackPanel Spacing="12">
+                <TextBlock Text="CHANNEL POINT REWARDS"
+                           Style="{StaticResource CpSectionHeaderStyle}" />
+
+                <!-- Header -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="1" Text="TITLE" Style="{StaticResource CpDimTextStyle}" />
+                    <TextBlock Grid.Column="3" Text="COST"  Style="{StaticResource CpDimTextStyle}" />
+                </Grid>
+
+                <!-- Minor -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="MINOR"
+                               FontFamily="Consolas" FontSize="{StaticResource CpFontSizeXs}"
+                               Foreground="{StaticResource CpGreenMinorBrush}" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.MinorTitle, Mode=TwoWay}" />
+                    <TextBox Grid.Column="3" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.MinorCost, Mode=TwoWay}" />
+                </Grid>
+
+                <!-- Moderate -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="MODERATE"
+                               FontFamily="Consolas" FontSize="{StaticResource CpFontSizeXs}"
+                               Foreground="{StaticResource CpYellowBrush}" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.ModerateTitle, Mode=TwoWay}" />
+                    <TextBox Grid.Column="3" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.ModerateCost, Mode=TwoWay}" />
+                </Grid>
+
+                <!-- Severe -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="SEVERE"
+                               FontFamily="Consolas" FontSize="{StaticResource CpFontSizeXs}"
+                               Foreground="{StaticResource CpRedBrush}" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.SevereTitle, Mode=TwoWay}" />
+                    <TextBox Grid.Column="3" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.SevereCost, Mode=TwoWay}" />
+                </Grid>
+
+                <!-- Pick Your Poison -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="POISON"
+                               FontFamily="Consolas" FontSize="{StaticResource CpFontSizeXs}"
+                               Foreground="{StaticResource CpAmberBrush}" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.PickYourPoisonTitle, Mode=TwoWay}" />
+                    <TextBox Grid.Column="3" Style="{StaticResource CpTextBoxStyle}"
+                             Text="{x:Bind ViewModel.PickYourPoisonCost, Mode=TwoWay}" />
+                </Grid>
+
+                <Button Content="PUSH TO TWITCH"
+                        Style="{StaticResource CpButtonStyle}"
+                        Command="{x:Bind ViewModel.CreateOrUpdateRewardsCommand}"
+                        HorizontalAlignment="Right" />
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+</ContentDialog>

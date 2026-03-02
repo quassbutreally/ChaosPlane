@@ -1,0 +1,179 @@
+<Application
+    x:Class="ChaosPlane.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ── Colour palette ─────────────────────────────────────────── -->
+            <!-- Cockpit dark theme: near-black panels, amber instruments -->
+
+            <Color x:Key="CpBg">#FF0D0F0E</Color>           <!-- near-black green-tinted -->
+            <Color x:Key="CpPanel">#FF141918</Color>         <!-- panel surface -->
+            <Color x:Key="CpPanelRaised">#FF1C2320</Color>  <!-- raised card -->
+            <Color x:Key="CpBorder">#FF2A3530</Color>        <!-- subtle border -->
+            <Color x:Key="CpAmber">#FFFFA500</Color>         <!-- amber instrument -->
+            <Color x:Key="CpAmberDim">#FF7A5000</Color>      <!-- dimmed amber -->
+            <Color x:Key="CpGreen">#FF00E676</Color>         <!-- connected / ok -->
+            <Color x:Key="CpRed">#FFFF3D3D</Color>           <!-- severe / fire -->
+            <Color x:Key="CpYellow">#FFFFCC00</Color>        <!-- moderate / caution -->
+            <Color x:Key="CpGreenMinor">#FF69FF47</Color>    <!-- minor -->
+            <Color x:Key="CpText">#FFD4DDD8</Color>          <!-- primary text -->
+            <Color x:Key="CpTextDim">#FF6E847A</Color>       <!-- secondary text -->
+            <Color x:Key="CpTextMuted">#FF3D4F47</Color>     <!-- muted / disabled -->
+
+            <SolidColorBrush x:Key="CpBgBrush"           Color="{StaticResource CpBg}" />
+            <SolidColorBrush x:Key="CpPanelBrush"        Color="{StaticResource CpPanel}" />
+            <SolidColorBrush x:Key="CpPanelRaisedBrush"  Color="{StaticResource CpPanelRaised}" />
+            <SolidColorBrush x:Key="CpBorderBrush"       Color="{StaticResource CpBorder}" />
+            <SolidColorBrush x:Key="CpAmberBrush"        Color="{StaticResource CpAmber}" />
+            <SolidColorBrush x:Key="CpAmberDimBrush"     Color="{StaticResource CpAmberDim}" />
+            <SolidColorBrush x:Key="CpGreenBrush"        Color="{StaticResource CpGreen}" />
+            <SolidColorBrush x:Key="CpRedBrush"          Color="{StaticResource CpRed}" />
+            <SolidColorBrush x:Key="CpYellowBrush"       Color="{StaticResource CpYellow}" />
+            <SolidColorBrush x:Key="CpGreenMinorBrush"   Color="{StaticResource CpGreenMinor}" />
+            <SolidColorBrush x:Key="CpTextBrush"         Color="{StaticResource CpText}" />
+            <SolidColorBrush x:Key="CpTextDimBrush"      Color="{StaticResource CpTextDim}" />
+            <SolidColorBrush x:Key="CpTextMutedBrush"    Color="{StaticResource CpTextMuted}" />
+
+            <!-- ── Typography ─────────────────────────────────────────────── -->
+            <!-- Consolas for data readouts, Segoe UI Variable for UI chrome -->
+
+            <x:Double x:Key="CpFontSizeXs">10</x:Double>
+            <x:Double x:Key="CpFontSizeSm">12</x:Double>
+            <x:Double x:Key="CpFontSizeMd">14</x:Double>
+            <x:Double x:Key="CpFontSizeLg">16</x:Double>
+            <x:Double x:Key="CpFontSizeXl">20</x:Double>
+            <x:Double x:Key="CpFontSize2xl">28</x:Double>
+
+            <!-- ── Control overrides ──────────────────────────────────────── -->
+
+            <Style x:Key="CpButtonStyle" TargetType="Button">
+                <Setter Property="Background"       Value="{StaticResource CpPanelRaisedBrush}" />
+                <Setter Property="Foreground"       Value="{StaticResource CpAmberBrush}" />
+                <Setter Property="BorderBrush"      Value="{StaticResource CpAmberDimBrush}" />
+                <Setter Property="BorderThickness"  Value="1" />
+                <Setter Property="Padding"          Value="16,8" />
+                <Setter Property="FontFamily"       Value="Consolas" />
+                <Setter Property="FontSize"         Value="{StaticResource CpFontSizeSm}" />
+                <Setter Property="CornerRadius"     Value="2" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="RootGrid.Background" Value="{StaticResource CpBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="RootGrid.Background" Value="{StaticResource CpAmberDimBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Opacity" Value="0.35" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding CornerRadius}" />
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Foreground="{TemplateBinding Foreground}"
+                                                  FontFamily="{TemplateBinding FontFamily}"
+                                                  FontSize="{TemplateBinding FontSize}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CpDangerButtonStyle" TargetType="Button" BasedOn="{StaticResource CpButtonStyle}">
+                <Setter Property="Foreground"  Value="{StaticResource CpRedBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource CpRedBrush}" />
+            </Style>
+
+            <Style x:Key="CpGreenButtonStyle" TargetType="Button" BasedOn="{StaticResource CpButtonStyle}">
+                <Setter Property="Foreground"  Value="{StaticResource CpGreenBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource CpGreenBrush}" />
+            </Style>
+
+            <Style x:Key="CpTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background"      Value="{StaticResource CpPanelBrush}" />
+                <Setter Property="Foreground"      Value="{StaticResource CpTextBrush}" />
+                <Setter Property="BorderBrush"     Value="{StaticResource CpBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="FontFamily"      Value="Consolas" />
+                <Setter Property="FontSize"        Value="{StaticResource CpFontSizeSm}" />
+                <Setter Property="CornerRadius"    Value="2" />
+                <Setter Property="Padding"         Value="8,6" />
+            </Style>
+
+            <Style x:Key="CpComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Background"      Value="{StaticResource CpPanelBrush}" />
+                <Setter Property="Foreground"      Value="{StaticResource CpTextBrush}" />
+                <Setter Property="BorderBrush"     Value="{StaticResource CpBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="FontFamily"      Value="Consolas" />
+                <Setter Property="FontSize"        Value="{StaticResource CpFontSizeSm}" />
+            </Style>
+
+            <!-- Label above a control -->
+            <Style x:Key="CpLabelStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource CpTextDimBrush}" />
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="FontSize"   Value="{StaticResource CpFontSizeXs}" />
+                <Setter Property="Margin"     Value="0,0,0,4" />
+            </Style>
+
+            <!-- Panel card -->
+            <Style x:Key="CpCardStyle" TargetType="Border">
+                <Setter Property="Background"       Value="{StaticResource CpPanelRaisedBrush}" />
+                <Setter Property="BorderBrush"      Value="{StaticResource CpBorderBrush}" />
+                <Setter Property="BorderThickness"  Value="1" />
+                <Setter Property="CornerRadius"     Value="4" />
+                <Setter Property="Padding"          Value="16" />
+            </Style>
+
+            <!-- Section header -->
+            <Style x:Key="CpSectionHeaderStyle" TargetType="TextBlock">
+                <Setter Property="Foreground"  Value="{StaticResource CpAmberBrush}" />
+                <Setter Property="FontFamily"  Value="Consolas" />
+                <Setter Property="FontSize"    Value="{StaticResource CpFontSizeXs}" />
+                <Setter Property="FontWeight"  Value="Bold" />
+                <Setter Property="CharacterSpacing" Value="150" />
+                <Setter Property="Margin"      Value="0,0,0,12" />
+            </Style>
+
+            <!-- Monospace data readout -->
+            <Style x:Key="CpReadoutStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource CpTextBrush}" />
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="FontSize"   Value="{StaticResource CpFontSizeSm}" />
+            </Style>
+
+            <!-- Dim secondary text -->
+            <Style x:Key="CpDimTextStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource CpTextDimBrush}" />
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="FontSize"   Value="{StaticResource CpFontSizeXs}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
