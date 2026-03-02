@@ -17,6 +17,7 @@ public class FailureOrchestrator
     private readonly CatalogueService _catalogue;
     private readonly XPlaneService    _xplane;
     private readonly TwitchService    _twitch;
+    private readonly ExtensionService _extension;
 
     private readonly Random _random = new();
 
@@ -37,15 +38,21 @@ public class FailureOrchestrator
     public FailureOrchestrator(
         CatalogueService catalogue,
         XPlaneService    xplane,
-        TwitchService    twitch)
+        TwitchService    twitch,
+        ExtensionService extension)
     {
         _catalogue = catalogue;
         _xplane    = xplane;
         _twitch    = twitch;
+        _extension = extension;
 
         // Wire up Twitch events
         _twitch.TierRewardRedeemed     += OnTierRewardRedeemedAsync;
         _twitch.PickYourPoisonRedeemed += OnPickYourPoisonRedeemedAsync;
+
+        // Wire up Extension events
+        _extension.TierTriggered    += OnExtensionTierTriggeredAsync;
+        _extension.FailureTriggered += OnExtensionFailureTriggeredAsync;
     }
 
     // ── Public: catalogue access for UI ──────────────────────────────────────
@@ -147,7 +154,7 @@ public class FailureOrchestrator
             return;
         }
 
-        var match = FuzzyMatch(userInput, _catalogue.Triggerable);
+        var match = FuzzyMatch(userInput, _catalogue.All);
 
         if (match == null)
         {
@@ -187,6 +194,68 @@ public class FailureOrchestrator
 
         _twitch.AnnounceNoMatch(viewerName, input);
         PickYourPoisonNoMatch?.Invoke(viewerName, input);
+    }
+
+    // ── Extension event handlers ──────────────────────────────────────────────
+
+    private async Task OnExtensionTierTriggeredAsync(FailureTier tier, string viewerName)
+    {
+        var pool = _catalogue.ForTier(tier);
+        if (pool.Count == 0) return;
+
+        var failure = pool[_random.Next(pool.Count)];
+
+        try
+        {
+            await _xplane.TriggerAsync(failure);
+        }
+        catch (XPlaneException)
+        {
+            _twitch.AnnounceNoMatch(viewerName, $"[X-Plane unreachable — {failure.Name} not triggered]");
+            return;
+        }
+
+        var triggered = new TriggeredFailure
+        {
+            Failure           = failure,
+            RedeemedBy        = viewerName,
+            WasPickYourPoison = false
+        };
+
+        _twitch.AnnounceFailure(triggered);
+        FailureTriggered?.Invoke(triggered);
+    }
+
+    private async Task OnExtensionFailureTriggeredAsync(string failureId, string viewerName)
+    {
+        var failure = _catalogue.FindById(failureId);
+
+        if (failure == null)
+        {
+            _twitch.AnnounceNoMatch(viewerName, failureId);
+            PickYourPoisonNoMatch?.Invoke(viewerName, failureId);
+            return;
+        }
+
+        try
+        {
+            await _xplane.TriggerAsync(failure);
+        }
+        catch (XPlaneException)
+        {
+            _twitch.AnnounceNoMatch(viewerName, $"[X-Plane unreachable — {failure.Name} not triggered]");
+            return;
+        }
+
+        var triggered = new TriggeredFailure
+        {
+            Failure           = failure,
+            RedeemedBy        = viewerName,
+            WasPickYourPoison = true
+        };
+
+        _twitch.AnnounceFailure(triggered);
+        FailureTriggered?.Invoke(triggered);
     }
 
     // ── Fuzzy matching ────────────────────────────────────────────────────────
@@ -249,7 +318,7 @@ public class FailureOrchestrator
     private static double DiceCoefficient(HashSet<string> a, HashSet<string> b)
     {
         if (a.Count == 0 || b.Count == 0) return 0;
-        var intersection = a.Count(b.Contains);
+        var intersection = a.Count(x => b.Contains(x));
         return 2.0 * intersection / (a.Count + b.Count);
     }
 

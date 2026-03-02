@@ -73,6 +73,18 @@
                                Style="{StaticResource CpDimTextStyle}"
                                VerticalAlignment="Center" />
                 </StackPanel>
+                
+                <!-- EBS indicator -->
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock x:Name="ExtensionIndicator"
+                               Text="⬤"
+                               FontSize="7"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource CpTextMutedBrush}" />
+                    <TextBlock Text="EBS"
+                               Style="{StaticResource CpDimTextStyle}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
 
                 <!-- Window controls -->
                 <StackPanel Orientation="Horizontal" Spacing="0">

@@ -165,6 +165,20 @@ public partial class DashboardViewModel : ObservableObject
             await _orchestrator.ResetAsync(active.Triggered);
     }
 
+    // ── Public: called by MainViewModel on X-Plane disconnect ────────────────
+
+    /// <summary>
+    /// Clears the active failure list without attempting to write datarefs.
+    /// Used when X-Plane disconnects mid-session — the sim state is already
+    /// gone so there is nothing to reset.
+    /// </summary>
+    public void ClearActiveFailures()
+    {
+        ActiveFailures.Clear();
+        ActiveFailureCount = 0;
+        AddLog("X-Plane disconnected — active failures cleared", LogEntryKind.System);
+    }
+
     // ── Private helpers ───────────────────────────────────────────────────────
 
     private async Task ResetFailureAsync(ActiveFailureViewModel active)
@@ -233,7 +247,7 @@ public partial class ActiveFailureViewModel : ObservableObject
     public string           Name          { get; }
     public string           RedeemedBy    { get; }
     public string           TierLabel     { get; }
-    public DateTimeOffset   TriggeredAt   { get; }
+    private DateTimeOffset   TriggeredAt   { get; }
     public bool             WasPickYourPoison { get; }
 
     public string TimeAgo =>
@@ -241,26 +255,19 @@ public partial class ActiveFailureViewModel : ObservableObject
         {
             { TotalSeconds: < 60 }  t => $"{(int)t.TotalSeconds}s ago",
             { TotalMinutes: < 60 }  t => $"{(int)t.TotalMinutes}m ago",
-            var                     t => $"{(int)t.TotalHours}h ago"
+            var                   t => $"{(int)t.TotalHours}h ago"
         };
 
     [RelayCommand]
     private async Task ResetAsync() => await _resetCallback(this);
 }
 
-public class LogEntryViewModel
+public class LogEntryViewModel(string text, LogEntryKind kind)
 {
-    public LogEntryViewModel(string text, LogEntryKind kind)
-    {
-        Text      = text;
-        Kind      = kind;
-        Timestamp = DateTimeOffset.Now;
-    }
-
-    public string         Text      { get; }
-    public LogEntryKind   Kind      { get; }
-    public DateTimeOffset Timestamp { get; }
+    public string         Text      { get; } = text;
+    public LogEntryKind   Kind      { get; } = kind;
+    private DateTimeOffset Timestamp { get; } = DateTimeOffset.Now;
     public string         TimeLabel => Timestamp.ToString("HH:mm:ss");
 }
 
-public enum LogEntryKind { Triggered, Refunded, Reset }
+public enum LogEntryKind { Triggered, Refunded, Reset, System }

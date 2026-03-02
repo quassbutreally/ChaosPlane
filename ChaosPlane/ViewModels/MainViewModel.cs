@@ -17,6 +17,7 @@ public partial class MainViewModel : ObservableObject
     private readonly FailureConfigService _configService;
     private readonly XPlaneService        _xplaneService;
     private readonly TwitchService        _twitchService;
+    private readonly ExtensionService     _extensionService;
     private readonly FailureOrchestrator  _orchestrator;
 
     // ── Child ViewModels ──────────────────────────────────────────────────────
@@ -31,6 +32,9 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private bool _xplaneConnected;
+
+    [ObservableProperty]
+    private bool _extensionConnected;
 
     [ObservableProperty]
     private string _twitchStatusText = "Not connected";
@@ -55,6 +59,7 @@ public partial class MainViewModel : ObservableObject
         FailureConfigService configService,
         XPlaneService        xplaneService,
         TwitchService        twitchService,
+        ExtensionService     extensionService,
         FailureOrchestrator  orchestrator)
     {
         _settingsService  = settingsService;
@@ -62,15 +67,17 @@ public partial class MainViewModel : ObservableObject
         _configService    = configService;
         _xplaneService    = xplaneService;
         _twitchService    = twitchService;
+        _extensionService = extensionService;
         _orchestrator     = orchestrator;
 
         FailureBrowser = new FailureBrowserViewModel(catalogueService, configService);
         Dashboard      = new DashboardViewModel(orchestrator, twitchService, xplaneService);
 
         // Wire up service events
-        _twitchService.ConnectionChanged  += OnTwitchConnectionChanged;
-        _xplaneService.ConnectionChanged  += OnXplaneConnectionChanged;
-        _orchestrator.FailureTriggered    += Dashboard.OnFailureTriggered;
+        _twitchService.ConnectionChanged    += OnTwitchConnectionChanged;
+        _xplaneService.ConnectionChanged    += OnXplaneConnectionChanged;
+        _extensionService.ConnectionChanged += OnExtensionConnectionChanged;
+        _orchestrator.FailureTriggered      += Dashboard.OnFailureTriggered;
         _orchestrator.PickYourPoisonNoMatch += Dashboard.OnPickYourPoisonNoMatch;
     }
 
@@ -105,6 +112,9 @@ public partial class MainViewModel : ObservableObject
             StatusMessage = "Reconnecting to Twitch...";
             await TryConnectTwitchAsync();
         }
+
+        // Start the EBS relay connection (reconnects automatically)
+        _extensionService.Start();
 
         StatusMessage = null;
         IsBusy = false;
@@ -228,16 +238,37 @@ public partial class MainViewModel : ObservableObject
             XplaneStatusText = connected
                 ? $"Connected — {_settingsService.Settings.XPlane.Host}:{_settingsService.Settings.XPlane.Port}"
                 : $"Not connected — {_settingsService.Settings.XPlane.Host}:{_settingsService.Settings.XPlane.Port}";
+
+            // If X-Plane dropped mid-session, the sim no longer knows about
+            // any active failures — clear the dashboard so it doesn't lie
+            if (!connected)
+            {
+                Dashboard.ClearActiveFailures();
+                StatusMessage = "⚠ X-Plane disconnected — active failures cleared";
+            }
         });
     }
 
     private void OnTwitchConnectionChanged(bool connected)
     {
-        // Called from TwitchService potentially on a background thread
-        // CommunityToolkit.Mvvm dispatches property changes to the UI thread
-        TwitchConnected  = connected;
-        TwitchStatusText = connected
-            ? $"Connected as {_twitchService.ChannelName}"
-            : "Disconnected";
+        // Called from TwitchService on a background thread — must dispatch
+        App.DispatchToUi(() =>
+        {
+            TwitchConnected  = connected;
+            TwitchStatusText = connected
+                ? $"Connected as {_twitchService.ChannelName}"
+                : "Disconnected";
+
+            // If Twitch dropped unexpectedly (e.g. token expired), make it
+            // visible — redemptions will silently stop working otherwise
+            if (!connected)
+                StatusMessage = "⚠ Twitch disconnected — reconnect in Settings";
+        });
+    }
+
+    private void OnExtensionConnectionChanged(bool connected)
+    {
+        // Already dispatched to UI thread by ExtensionService
+        ExtensionConnected = connected;
     }
 }

@@ -31,6 +31,8 @@ public sealed partial class MainWindow : Window
                     UpdateIndicator(TwitchIndicator, vm.TwitchConnected); break;
                 case nameof(MainViewModel.StatusMessage):
                     StatusMessageText.Text = vm.StatusMessage ?? string.Empty; break;
+                case nameof(MainViewModel.ExtensionConnected):
+                    UpdateIndicator(ExtensionIndicator, vm.ExtensionConnected); break;
             }
         };
 
