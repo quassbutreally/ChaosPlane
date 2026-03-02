@@ -41,9 +41,8 @@ app.MapPost("/trigger", async (HttpContext ctx, JwtService jwt, RelayService rel
     // Verify the Twitch JWT from the Authorization header
     var token = ctx.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
     
-    // TEMP: skip JWT for testing
-    // var claims = jwt.Verify(token);
-    // if (claims == null) { ctx.Response.StatusCode = 401; return; }
+    var claims = jwt.Verify(token);
+    if (claims == null) { ctx.Response.StatusCode = 401; return; }
 
     var body = await ctx.Request.ReadFromJsonAsync<TriggerRequest>();
     if (body == null)
