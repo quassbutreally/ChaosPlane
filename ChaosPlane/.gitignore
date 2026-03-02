@@ -19,18 +19,6 @@ publish/
 packages/
 project.lock.json
 
-# App settings — contains Twitch access token, channel name, reward IDs
-# Commit appsettings.template.json instead
-ChaosPlane/appsettings.json
-
-# EBS settings — contains extension secret and broadcaster ID
-# Set these as environment variables in Railway instead
-ChaosPlane.EBS/appsettings.json
-
-# Secrets — contains Twitch client ID
-# Commit Secrets.template.cs instead
-ChaosPlane/Secrets.cs
-
 # User failure config — generated at runtime, specific to each user's setup
 AppData/
 
