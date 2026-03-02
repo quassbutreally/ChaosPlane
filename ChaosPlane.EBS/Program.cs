@@ -10,9 +10,18 @@ builder.Services.Configure<TwitchConfig>(
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<RelayService>();
 
+builder.Services.AddCors();
+
 // ── App ───────────────────────────────────────────────────────────────────────
 
 var app = builder.Build();
+
+// Cors
+
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 // WebSocket support
 app.UseWebSockets();
