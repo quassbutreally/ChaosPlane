@@ -1,85 +1,46 @@
-﻿/* ── ChaosPlane Extension — viewer.js ───────────────────────────────────────
- *
- * Responsibilities:
- *   - Load failure catalogue from GitHub Pages
- *   - Render tier buttons and browsable failure list
- *   - Disable currently active failures
- *   - Handle bits transactions via Twitch Extension JS helper
- *   - Post confirmed triggers to the EBS
- *
- * Bit costs are defined in BITS_COST below — update to match your
- * Twitch Extension Products once configured.
- * ────────────────────────────────────────────────────────────────────────── */
+﻿/* ── ChaosPlane Extension — viewer.js ─────────────────────────────────────── */
 
-const EBS_URL      = 'https://chaosplane-production.up.railway.app';
+const EBS_URL       = 'https://chaosplane-production.up.railway.app';
 const CATALOGUE_URL = 'https://quassbutreally.github.io/ChaosPlane/FailureCatalogue.json';
 
 const BITS_COST = {
     Minor:    100,
     Moderate: 500,
     Severe:   1000,
-    Specific: 200   // flat cost for browsing a specific failure
 };
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const dot      = document.getElementById('statusDot');
-    const subtitle = document.querySelector('.subtitle');
-
-    // Check Twitch ext
-    if (typeof window.Twitch === 'undefined') {
-        subtitle.textContent = '// TWITCH EXT NOT LOADED';
-        dot.style.background = 'red';
-    } else {
-        subtitle.textContent = '// TWITCH EXT OK';
-        dot.style.background = 'orange';
-    }
-
-    // Test catalogue fetch independently of Twitch auth
-    try {
-        const res  = await fetch(CATALOGUE_URL);
-        const json = await res.json();
-        catalogue  = (json.Failures || []).map(f => ({
-            id:       f.Id,
-            name:     f.Name,
-            category: f.Category,
-            tier:     f.SuggestedTier || null
-        }));
-        subtitle.textContent += ` | CAT: ${catalogue.length}`;
-        renderFailureList('');
-        updateBitsCosts();
-    } catch (e) {
-        subtitle.textContent += ` | CAT FAIL: ${e.message}`;
-    }
-});
-
-document.getElementById('tabTier').addEventListener('click', () => switchTab('tier'));
-document.getElementById('tabBrowse').addEventListener('click', () => switchTab('browse'));
-
-document.getElementById('tier-btn-minor').addEventListener('click', () => selectTier('minor'));
-document.getElementById('tier-btn-moderate').addEventListener('click', () => selectTier('moderate'));
-document.getElementById('tier-btn-severe').addEventListener('click', () => selectTier('severe'));
-
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-let catalogue      = [];   // all ResolvedFailure entries
-let activeFailures = [];   // failure IDs currently active (pushed from EBS via pubsub)
-let twitchAuth     = null; // Twitch auth context (userId, token)
-let pendingTrigger = null; // { type: 'tier'|'specific', tier?, failureId?, name, cost }
+let catalogue      = [];
+let activeFailures = [];
+let twitchAuth     = null;
+let pendingTrigger = null;
 
-// ── Twitch helper init ────────────────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+// Wire up tab buttons
+document.getElementById('tabTier').addEventListener('click',   () => switchTab('tier'));
+document.getElementById('tabBrowse').addEventListener('click', () => switchTab('browse'));
+
+// Wire up tier buttons
+document.getElementById('btnMinor').addEventListener('click',    () => selectTier('Minor'));
+document.getElementById('btnModerate').addEventListener('click', () => selectTier('Moderate'));
+document.getElementById('btnSevere').addEventListener('click',   () => selectTier('Severe'));
+
+// Wire up modal buttons
+document.getElementById('btnCancel').addEventListener('click',  closeModal);
+document.getElementById('btnConfirm').addEventListener('click', confirmTrigger);
+
+// Load catalogue immediately — don't wait for Twitch auth
+loadCatalogue();
+
+// ── Twitch helper ─────────────────────────────────────────────────────────────
 
 window.Twitch.ext.onAuthorized(auth => {
     twitchAuth = auth;
     setConnected(true);
-    loadCatalogue();
 });
 
-window.Twitch.ext.onContext((ctx, delta) => {
-    // Nothing needed from context for now
-});
-
-// Listen for pubsub messages from EBS (active failure updates)
 window.Twitch.ext.listen('broadcast', (target, contentType, message) => {
     try {
         const data = JSON.parse(message);
@@ -87,12 +48,10 @@ window.Twitch.ext.listen('broadcast', (target, contentType, message) => {
             activeFailures = data.failureIds || [];
             renderFailureList(document.getElementById('searchInput').value);
         }
-    } catch (e) {
-        // Ignore malformed messages
-    }
+    } catch (e) {}
 });
 
-// ── Catalogue loading ─────────────────────────────────────────────────────────
+// ── Catalogue ─────────────────────────────────────────────────────────────────
 
 async function loadCatalogue() {
     try {
@@ -106,23 +65,18 @@ async function loadCatalogue() {
             tier:     f.SuggestedTier || null
         }));
 
-        console.log('fetch status:', res.status);
-        console.log('catalogue length:', catalogue.length);
-
         renderFailureList('');
         updateBitsCosts();
-    } catch (e) {
-        console.error('Failed to load catalogue:', e);
-    }
+    } catch (e) {}
 }
 
-// ── Tab switching ─────────────────────────────────────────────────────────────
+// ── Tabs ──────────────────────────────────────────────────────────────────────
 
 function switchTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab'   + cap(tab)).classList.add('active');
-    document.getElementById('pane'  + cap(tab)).classList.add('active');
+    document.getElementById('tab'  + cap(tab)).classList.add('active');
+    document.getElementById('pane' + cap(tab)).classList.add('active');
 }
 
 function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -197,17 +151,21 @@ function renderFailureList(query) {
 function selectSpecific(failure) {
     if (!twitchAuth) return;
 
+    const tier = failure.tier || 'Moderate';
+    const cost = BITS_COST[tier] || BITS_COST.Moderate;
+
     pendingTrigger = {
         type:      'specific',
         failureId: failure.id,
+        tier:      tier,
         name:      failure.name,
-        cost:      BITS_COST.Specific
+        cost:      cost
     };
 
-    showModal('PICK YOUR POISON', failure.name, BITS_COST.Specific);
+    showModal('PICK YOUR POISON', failure.name, cost);
 }
 
-// ── Confirm modal ─────────────────────────────────────────────────────────────
+// ── Modal ─────────────────────────────────────────────────────────────────────
 
 function showModal(title, name, cost) {
     document.getElementById('modalTitle').textContent       = title;
@@ -224,24 +182,18 @@ function closeModal() {
 function confirmTrigger() {
     if (!pendingTrigger || !twitchAuth) return;
 
-    // Use Twitch bits API to charge the viewer
     window.Twitch.ext.bits.useBits(getProductSku(pendingTrigger), {
-        onFulfilled: () => {
-            sendTriggerToEbs(pendingTrigger);
-            closeModal();
-        },
-        onCancelled: () => {
-            closeModal();
-        }
+        onFulfilled: () => { sendTriggerToEbs(pendingTrigger); closeModal(); },
+        onCancelled: () => { closeModal(); }
     });
 }
 
 function getProductSku(trigger) {
-    if (trigger.type === 'specific') return 'chaosplane_specific';
-    return `chaosplane_${trigger.tier.toLowerCase()}`;
+    const tier = (trigger.tier || 'Moderate').toLowerCase();
+    return `chaosplane_${tier}`;
 }
 
-// ── EBS communication ─────────────────────────────────────────────────────────
+// ── EBS ───────────────────────────────────────────────────────────────────────
 
 async function sendTriggerToEbs(trigger) {
     if (!twitchAuth) return;
@@ -259,16 +211,14 @@ async function sendTriggerToEbs(trigger) {
             },
             body: JSON.stringify(body)
         });
-    } catch (e) {
-        console.error('Failed to send trigger:', e);
-    }
+    } catch (e) {}
 }
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function setConnected(connected) {
-    const dot = document.getElementById('statusDot');
-    dot.className = 'status-dot ' + (connected ? 'connected' : 'error');
+    document.getElementById('statusDot').className =
+        'status-dot ' + (connected ? 'connected' : 'error');
 }
 
 function escHtml(str) {

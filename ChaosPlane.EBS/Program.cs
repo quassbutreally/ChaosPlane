@@ -55,17 +55,8 @@ app.MapPost("/trigger", async (HttpContext ctx, JwtService jwt, RelayService rel
 // Health check for Railway
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
-// Catalogue fetch
-app.MapGet("/catalogue", async (HttpContext ctx) =>
-{
-    ctx.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-    
-    using var http = new HttpClient();
-    var json = await http.GetStringAsync(
-        "https://quassbutreally.github.io/ChaosPlane/FailureCatalogue.json");
-    
-    ctx.Response.ContentType = "application/json";
-    await ctx.Response.WriteAsync(json);
-});
+// Status of app
+app.MapGet("/status", (RelayService relay) =>
+    Results.Ok(new { online = relay.IsDesktopConnected }));
 
 app.Run();
