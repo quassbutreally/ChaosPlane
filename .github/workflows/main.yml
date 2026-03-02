@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'Data/FailureCatalogue.json'
+      - 'ChaosPlane/Data/FailureCatalogue.json'
       - 'docs/**'
 
   workflow_dispatch:
