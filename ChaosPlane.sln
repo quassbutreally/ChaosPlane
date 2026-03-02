@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosPlane.EBS", "ChaosPlane.EBS\ChaosPlane.EBS.csproj", "{6D330DF2-EC13-4B73-BC81-9CAEB5886C76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChaosPlane", "ChaosPlane\ChaosPlane.csproj", "{1E1923D7-E44F-4A39-ABD9-44B64F5FF3AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D330DF2-EC13-4B73-BC81-9CAEB5886C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D330DF2-EC13-4B73-BC81-9CAEB5886C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D330DF2-EC13-4B73-BC81-9CAEB5886C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D330DF2-EC13-4B73-BC81-9CAEB5886C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E1923D7-E44F-4A39-ABD9-44B64F5FF3AF}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1E1923D7-E44F-4A39-ABD9-44B64F5FF3AF}.Debug|Any CPU.Build.0 = Debug|x86
+		{1E1923D7-E44F-4A39-ABD9-44B64F5FF3AF}.Release|Any CPU.ActiveCfg = Release|x86
+		{1E1923D7-E44F-4A39-ABD9-44B64F5FF3AF}.Release|Any CPU.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
