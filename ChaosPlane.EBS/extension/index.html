@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ChaosPlane</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --bg:         #0D0F0E;
+            --panel:      #141918;
+            --raised:     #1C2320;
+            --border:     #2A3530;
+            --amber:      #FFA500;
+            --amber-dim:  #7A5000;
+            --amber-glow: rgba(255,165,0,0.08);
+            --green:      #00E676;
+            --yellow:     #FFCC00;
+            --red:        #FF3D3D;
+            --text:       #D4DDD8;
+            --text-dim:   #6E847A;
+            --text-muted: #3D4F47;
+            --mono:       'Share Tech Mono', monospace;
+            --sans:       'Barlow', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Header ── */
+
+        .header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .wordmark {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.15em;
+            color: var(--amber);
+        }
+
+        .subtitle {
+            font-family: var(--mono);
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: background 0.3s;
+        }
+        .status-dot.connected { background: var(--green); }
+        .status-dot.error     { background: var(--red); }
+
+        /* ── Tabs ── */
+
+        .tabs {
+            display: flex;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab:hover { color: var(--text); }
+
+        .tab.active {
+            color: var(--amber);
+            border-bottom-color: var(--amber);
+        }
+
+        /* ── Content ── */
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .pane { display: none; height: 100%; }
+        .pane.active { display: flex; flex-direction: column; }
+
+        /* ── Tier pane ── */
+
+        .tier-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 14px;
+        }
+
+        .tier-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: var(--raised);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            width: 100%;
+        }
+
+        .tier-btn:hover:not(:disabled) {
+            border-color: var(--amber-dim);
+            background: var(--amber-glow);
+        }
+
+        .tier-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .tier-btn-left { display: flex; flex-direction: column; gap: 3px; }
+
+        .tier-name {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+        }
+
+        .tier-desc {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .tier-cost {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .tier-btn.minor  .tier-name { color: var(--green); }
+        .tier-btn.moderate .tier-name { color: var(--yellow); }
+        .tier-btn.severe .tier-name { color: var(--red); }
+
+        /* ── Browse pane ── */
+
+        .search-bar {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--raised);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 7px 10px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus { border-color: var(--amber-dim); }
+        .search-input::placeholder { color: var(--text-muted); }
+
+        .failure-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .failure-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            margin-bottom: 3px;
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .failure-item:hover:not(.active-failure) {
+            background: var(--raised);
+            border-color: var(--border);
+        }
+
+        .failure-item.active-failure {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .failure-item-left { display: flex; flex-direction: column; gap: 2px; }
+
+        .failure-name {
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .failure-category {
+            font-family: var(--mono);
+            font-size: 9px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .tier-badge {
+            font-family: var(--mono);
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .tier-badge.minor    { color: var(--green);  background: rgba(0,230,118,0.1);  }
+        .tier-badge.moderate { color: var(--yellow); background: rgba(255,204,0,0.1);  }
+        .tier-badge.severe   { color: var(--red);    background: rgba(255,61,61,0.1);  }
+        .tier-badge.none     { color: var(--text-muted); }
+
+        /* ── Confirm modal ── */
+
+        .modal-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px;
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .modal-title {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--amber);
+        }
+
+        .modal-failure-name {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .modal-cost {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .btn-cancel {
+            background: var(--raised);
+            color: var(--text-dim);
+        }
+
+        .btn-cancel:hover { color: var(--text); }
+
+        .btn-confirm {
+            background: var(--amber);
+            color: #000;
+            border-color: var(--amber);
+            font-weight: bold;
+        }
+
+        .btn-confirm:hover { opacity: 0.9; }
+
+        /* ── Not connected state ── */
+
+        .not-connected {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .not-connected-icon {
+            font-size: 28px;
+            opacity: 0.4;
+        }
+
+        .not-connected-text {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            line-height: 1.6;
+        }
+
+        /* ── Empty state ── */
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            gap: 8px;
+            color: var(--text-muted);
+            font-family: var(--mono);
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div>
+        <div class="wordmark">CHAOSPLANE</div>
+        <div class="subtitle">// CL650 FAILURE SYSTEM</div>
+    </div>
+    <div class="status-dot" id="statusDot"></div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+    <button class="tab active" id="tabTier">TIERS</button>
+    <button class="tab"        id="tabBrowse">BROWSE</button>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+    <!-- Tier pane -->
+    <div class="pane active" id="paneTier">
+        <div class="tier-grid">
+            <button class="tier-btn minor"    id="btnMinor">
+                <div class="tier-btn-left">
+                    <div class="tier-name">🟢 MINOR</div>
+                    <div class="tier-desc">A random minor failure — annoying but manageable</div>
+                </div>
+                <div class="tier-cost" id="costMinor">— bits</div>
+            </button>
+            <button class="tier-btn moderate" id="btnModerate">
+                <div class="tier-btn-left">
+                    <div class="tier-name">🟡 MODERATE</div>
+                    <div class="tier-desc">Something significant — expect workload</div>
+                </div>
+                <div class="tier-cost" id="costModerate">— bits</div>
+            </button>
+            <button class="tier-btn severe"   id="btnSevere">
+                <div class="tier-btn-left">
+                    <div class="tier-name">🔴 SEVERE</div>
+                    <div class="tier-desc">A serious emergency — may not end well</div>
+                </div>
+                <div class="tier-cost" id="costSevere">— bits</div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Browse pane -->
+    <div class="pane" id="paneBrowse">
+        <div class="search-bar">
+            <input class="search-input"
+                   id="searchInput"
+                   type="text"
+                   placeholder="SEARCH FAILURES..."
+                   oninput="filterFailures(this.value)" />
+        </div>
+        <div class="failure-list" id="failureList"></div>
+    </div>
+
+</div>
+
+<!-- Confirm modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle">CONFIRM FAILURE</div>
+        <div class="modal-failure-name" id="modalFailureName"></div>
+        <div class="modal-cost" id="modalCost"></div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel"  onclick="closeModal()">CANCEL</button>
+            <button class="btn btn-confirm" id="btnConfirm" onclick="confirmTrigger()">SPEND BITS</button>
+        </div>
+    </div>
+</div>
+<script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+<script src="Viewer.js"></script>
+</body>
+</html>

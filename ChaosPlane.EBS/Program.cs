@@ -1,7 +1,4 @@
 using ChaosPlane.EBS.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,5 +54,18 @@ app.MapPost("/trigger", async (HttpContext ctx, JwtService jwt, RelayService rel
 
 // Health check for Railway
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+// Catalogue fetch
+app.MapGet("/catalogue", async (HttpContext ctx) =>
+{
+    ctx.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+    
+    using var http = new HttpClient();
+    var json = await http.GetStringAsync(
+        "https://quassbutreally.github.io/ChaosPlane/FailureCatalogue.json");
+    
+    ctx.Response.ContentType = "application/json";
+    await ctx.Response.WriteAsync(json);
+});
 
 app.Run();
