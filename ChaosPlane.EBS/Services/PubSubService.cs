@@ -45,19 +45,19 @@ public class PubSubService(IOptions<TwitchConfig> config, ILogger<PubSubService>
         try
         {
             var jwt     = BuildServerJwt();
-            var payload = new
-            {
-                content_type = "application/json",
-                message,
-                targets      = new[] { target }
-            };
 
             var request = new HttpRequestMessage(
                 HttpMethod.Post,
                 $"https://api.twitch.tv/helix/extensions/pubsub")
             {
                 Content = new StringContent(
-                    JsonSerializer.Serialize(payload, JsonOptions),
+                    JsonSerializer.Serialize(new
+                    {
+                        target       = new[] { "broadcast" },
+                        broadcaster_id = _config.BroadcasterUserId,
+                        is_global_broadcast = false,
+                        message
+                    }, JsonOptions),
                     Encoding.UTF8,
                     "application/json")
             };
