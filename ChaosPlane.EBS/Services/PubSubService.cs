@@ -96,16 +96,16 @@ public class PubSubService(IOptions<TwitchConfig> config, ILogger<PubSubService>
 
         var exp = DateTimeOffset.UtcNow.AddMinutes(1).ToUnixTimeSeconds();
 
+        var pubsubPerms = JsonSerializer.Deserialize<JsonElement>(
+            """{"send":["broadcast"]}""");
+
         var payload = new JwtPayload
         {
-            { "exp",     exp },
-            { "user_id", _config.BroadcasterUserId },
-            { "role",    "external" },
-            { "pubsub_perms", new Dictionary<string, object>
-                {
-                    { "send", new[] { "broadcast" } }
-                }
-            }
+            { "exp",          exp },
+            { "user_id",      _config.BroadcasterUserId },
+            { "role",         "external" },
+            { "channel_id",   _config.BroadcasterUserId },
+            { "pubsub_perms", pubsubPerms }
         };
 
         var header  = new JwtHeader(creds);
