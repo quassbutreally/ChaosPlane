@@ -31,8 +31,11 @@ document.getElementById('btnSevere').addEventListener('click',   () => selectTie
 document.getElementById('btnCancel').addEventListener('click',  closeModal);
 document.getElementById('btnConfirm').addEventListener('click', confirmTrigger);
 
-// Load catalogue immediately — don't wait for Twitch auth
+// Load catalogue and initialise status checking every 30 seconds
 loadCatalogue();
+
+checkStatus();
+setInterval(checkStatus, 30000);
 
 // ── Twitch helper ─────────────────────────────────────────────────────────────
 
@@ -50,6 +53,33 @@ window.Twitch.ext.listen('broadcast', (target, contentType, message) => {
         }
     } catch (e) {}
 });
+
+// ── OnlineChecking ─────────────────────────────────────────────────────────────────
+
+async function checkStatus() {
+    try {
+        const res  = await fetch(`${EBS_URL}/status`);
+        const json = await res.json();
+        setOnline(json.online);
+    } catch (e) {
+        setOnline(false);
+    }
+}
+
+function setOnline(online) {
+    const btns = document.querySelectorAll('.tier-btn');
+    btns.forEach(b => b.disabled = !online);
+
+    // Grey out the whole browse pane if offline
+    document.getElementById('failureList').style.pointerEvents = online ? 'auto' : 'none';
+    document.getElementById('failureList').style.opacity       = online ? '1'    : '0.35';
+    document.getElementById('searchInput').disabled            = !online;
+
+    // Update subtitle to show offline state
+    document.querySelector('.subtitle').textContent = online
+        ? '// CL650 FAILURE SYSTEM'
+        : '// STREAMER OFFLINE';
+}
 
 // ── Catalogue ─────────────────────────────────────────────────────────────────
 
