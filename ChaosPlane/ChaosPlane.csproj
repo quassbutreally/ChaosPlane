@@ -28,6 +28,7 @@
 
     <!-- WebView2 for embedded OAuth browser -->
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
 
     <!-- Twitch -->
     <PackageReference Include="TwitchLib.Api"                Version="3.10.1" />
@@ -96,10 +97,6 @@
     <None Remove="ChaosPlane\ChaosPlane.pdb" />
     <None Remove="ChaosPlane\ChaosPlane.exe" />
     <None Remove="ChaosPlane\ChaosPlane.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ChaosPlane\Data\" />
   </ItemGroup>
 
 </Project>

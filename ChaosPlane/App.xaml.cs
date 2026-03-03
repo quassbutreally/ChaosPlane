@@ -25,24 +25,27 @@ public partial class App : Application
     {
         // ── Build services ────────────────────────────────────────────────────
 
-        var settingsPath = Path.Combine(
-            AppContext.BaseDirectory, "appsettings.json");
-
-        var configPath = Path.Combine(
+        var appDataDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "ChaosPlane", "FailureConfig.json");
+            "ChaosPlane");
+
+        var settingsPath  = Path.Combine(appDataDir, "appsettings.json");
+        var configPath    = Path.Combine(appDataDir, "FailureConfig.json");
 
         var cataloguePath = Path.Combine(
             AppContext.BaseDirectory, "Data", "FailureCatalogue.json");
 
-        Directory.CreateDirectory(Path.GetDirectoryName(configPath)!);
+        Directory.CreateDirectory(appDataDir);
 
-        var settingsService  = new SettingsService(settingsPath);
-        var configService    = new FailureConfigService(configPath);
-        var catalogueService = new CatalogueService(configService);
-        var xplaneService    = new XPlaneService(new HttpClient());
-        var twitchService    = new TwitchService(settingsService.Settings, settingsService);
-        var orchestrator     = new FailureOrchestrator(catalogueService, xplaneService, twitchService);
+        // SettingsService creates defaults if the file doesn't exist.
+        // Client ID is injected here so it survives clean builds.
+        var settingsService    = new SettingsService(settingsPath);
+        var configService      = new FailureConfigService(configPath);
+        var catalogueService   = new CatalogueService(configService);
+        var xplaneService      = new XPlaneService(new HttpClient());
+        var twitchService      = new TwitchService(settingsService.Settings, settingsService);
+        var extensionService   = new ExtensionService(settingsService.Settings);
+        var orchestrator       = new FailureOrchestrator(catalogueService, xplaneService, twitchService, extensionService);
 
         TwitchService    = twitchService;
         MainViewModel = new MainViewModel(
@@ -51,6 +54,7 @@ public partial class App : Application
             configService,
             xplaneService,
             twitchService,
+            extensionService,
             orchestrator);
 
         // ── Launch window ─────────────────────────────────────────────────────

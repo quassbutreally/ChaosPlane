@@ -1,0 +1,2173 @@
+{
+  "Failures": [
+    {
+      "Id": "cpc_failed",
+      "Name": "Cabin Pressure Controller Failed",
+      "Description": "The automatic cabin pressure controller has failed. Switch to manual pressurisation control immediately.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/cpc/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cpc_static_out_blocked",
+      "Name": "CPC Outside Static Port Blocked",
+      "Description": "The CPC's outside static pressure reference port is blocked. Pressurisation scheduling will be erroneous.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/cpc/static/out/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "cpc_static_in_blocked",
+      "Name": "CPC Inside Static Port Blocked",
+      "Description": "The CPC's inside cabin static port is blocked. Cabin altitude indication will be unreliable.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/cpc/static/in/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "cpam1_failed",
+      "Name": "Cabin Pressure Acquisition Module 1 Failed",
+      "Description": "CPAM 1 has failed. Backup pressurisation sensing is degraded.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/cpam/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cpam2_failed",
+      "Name": "Cabin Pressure Acquisition Module 2 Failed",
+      "Description": "CPAM 2 has failed.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/cpam/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cabin_airfilter_blocked",
+      "Name": "Cabin Air Filter Blocked",
+      "Description": "The recirculation air filter is blocked. Cabin ventilation is reduced.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/airfilter/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "vacpump_failed",
+      "Name": "Vacuum Ejector Pump Failed",
+      "Description": "The vacuum ejector pump has failed. Cabin pressurisation efficiency reduced.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/vacpump/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ofv1_stuck",
+      "Name": "Primary Outflow Valve Stuck",
+      "Description": "The primary outflow valve is stuck in its current position. Manual pressurisation control required.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/ofv/1/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "ofv2_stuck",
+      "Name": "Secondary Outflow Valve Stuck",
+      "Description": "The secondary outflow valve is stuck in its current position.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/ofv/2/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu1_sov_stuck",
+      "Name": "ACU 1 Inlet SOV Stuck",
+      "Description": "Air conditioning unit 1 inlet shutoff valve is stuck at its current position.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/1/sov/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu1_sov_open",
+      "Name": "ACU 1 Inlet SOV Stuck Open",
+      "Description": "Air conditioning unit 1 inlet shutoff valve is stuck fully open. Cannot isolate the pack.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/1/sov/open/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu1_cau_broken",
+      "Name": "ACU 1 Cold Air Unit Broken",
+      "Description": "The left pack cold air unit has failed. Pack 1 output temperature will be uncontrolled.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/1/cau/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu1_hx_clogged",
+      "Name": "ACU 1 Heat Exchangers Clogged",
+      "Description": "Pack 1 heat exchangers are clogged. Pack 1 cooling efficiency severely reduced.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/1/hx/clogged/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu1_tempctrl_fault",
+      "Name": "ACU 1 Temperature Controller Failed",
+      "Description": "Pack 1 automatic temperature controller has failed. Manual temperature management required.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/1/tempctrl/fault/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu2_sov_stuck",
+      "Name": "ACU 2 Inlet SOV Stuck",
+      "Description": "Air conditioning unit 2 inlet shutoff valve is stuck at its current position.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/2/sov/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu2_cau_broken",
+      "Name": "ACU 2 Cold Air Unit Broken",
+      "Description": "The right pack cold air unit has failed.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/2/cau/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "acu2_tempctrl_fault",
+      "Name": "ACU 2 Temperature Controller Failed",
+      "Description": "Pack 2 automatic temperature controller has failed.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/acu/2/tempctrl/fault/state", "Value": 1 }]
+    },
+    {
+      "Id": "cabin_leak_500",
+      "Name": "Cabin Pressure Leak — 500 ft/min",
+      "Description": "Cabin is leaking at ~500 ft/min. You have several minutes — begin descent planning now.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/leak/500/state", "Value": 1 }]
+    },
+    {
+      "Id": "cabin_leak_1000",
+      "Name": "Cabin Pressure Leak — 1000 ft/min",
+      "Description": "Cabin is leaking at ~1000 ft/min. Initiate descent without delay.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/leak/1000/state", "Value": 1 }]
+    },
+    {
+      "Id": "cabin_leak_fast",
+      "Name": "Rapid Cabin Depressurisation",
+      "Description": "Cabin is losing pressure rapidly. Don oxygen masks and execute emergency descent immediately.",
+      "Category": "ATA 21 — Air Conditioning",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/aircond/leak/fast/state", "Value": 1 }]
+    },        
+    {
+      "Id": "fcc1a_failed",
+      "Name": "Flight Control Computer 1A Failed",
+      "Description": "FCC 1A has failed. Autopilot capability degraded — expect mode reversions.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/fcc/1a/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fcc1b_failed",
+      "Name": "Flight Control Computer 1B Failed",
+      "Description": "FCC 1B has failed. Cross-check autopilot status.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/fcc/1b/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fcc2a_failed",
+      "Name": "Flight Control Computer 2A Failed",
+      "Description": "FCC 2A has failed. Cross-check autopilot modes and revert as required.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/fcc/2a/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fcc2b_failed",
+      "Name": "Flight Control Computer 2B Failed",
+      "Description": "FCC 2B has failed.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/fcc/2b/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ats_failed",
+      "Name": "Autothrottle System Failed",
+      "Description": "The autothrottle system has failed completely. Manual thrust management required for all phases.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/ats/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ats_msd1_failed",
+      "Name": "Left ATS Mode Select Device Failed",
+      "Description": "Left ATS MSD has failed. Autothrottle engagement from left side unavailable.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/ats/msd/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ats_msd2_failed",
+      "Name": "Right ATS Mode Select Device Failed",
+      "Description": "Right ATS MSD has failed.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/ats/msd/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ats_svo1_failed",
+      "Name": "Left ATS Servo Motor Failed",
+      "Description": "Left autothrottle servo motor has failed. Left thrust lever will not respond to ATS commands.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/ats/svo/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ats_svo2_failed",
+      "Name": "Right ATS Servo Motor Failed",
+      "Description": "Right autothrottle servo motor has failed.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/ats/svo/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "afcs_svo_ail_fail",
+      "Name": "Autopilot Aileron Servo Failed",
+      "Description": "The autopilot aileron servo has failed. Lateral autopilot modes are unavailable.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/svo/ail/fail/state", "Value": 1 }]
+    },
+    {
+      "Id": "afcs_svo_ail_runaway",
+      "Name": "Autopilot Aileron Servo Runaway",
+      "Description": "The autopilot aileron servo has runaway. Disconnect autopilot immediately and counter with full opposite aileron.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/svo/ail/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "afcs_svo_elev_fail",
+      "Name": "Autopilot Elevator Servo Failed",
+      "Description": "The autopilot elevator servo has failed. Pitch autopilot modes are unavailable.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/svo/elev/fail/state", "Value": 1 }]
+    },
+    {
+      "Id": "afcs_svo_elev_runaway",
+      "Name": "Autopilot Elevator Servo Runaway",
+      "Description": "The autopilot elevator servo has runaway. Disconnect autopilot immediately — pitch upset probable.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/svo/elev/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "yd1_failed",
+      "Name": "Yaw Damper Channel 1 Failed",
+      "Description": "Yaw damper channel 1 has failed. Some Dutch roll tendency may develop at altitude.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/yd/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "yd2_failed",
+      "Name": "Yaw Damper Channel 2 Failed",
+      "Description": "Yaw damper channel 2 has failed.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/afcs/yd/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "both_yd_failed",
+      "Name": "Both Yaw Dampers Failed",
+      "Description": "Both yaw damper channels have failed simultaneously. Pronounced Dutch roll tendency — reduce speed and consider diverting.",
+      "Category": "ATA 22 — Auto Flight",
+      "SuggestedTier": "Moderate",
+      "Actions": [
+        { "Dataref": "CL650/failures/systems/afcs/yd/1/failed/state", "Value": 1 },
+        { "Dataref": "CL650/failures/systems/afcs/yd/2/failed/state", "Value": 1 }
+      ]
+    },        
+    {
+      "Id": "xpdr1_failed",
+      "Name": "Transponder 1 / TCAS Failed",
+      "Description": "ATC 1 transponder and TCAS computer (TSS-4100) have failed. TCAS protection is lost.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/xpdr/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "xpdr2_failed",
+      "Name": "Transponder 2 Failed",
+      "Description": "ATC 2 transponder (TDR-94D) has failed. Verify TCAS remains operational on transponder 1.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/xpdr/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "vhf_comm1_failed",
+      "Name": "VHF Comm 1 Failed (Hard)",
+      "Description": "VHF comm 1 radio has failed outright. No audio input or output. Switch to comm 2.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/vhf/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "vhf_comm1_analog",
+      "Name": "VHF Comm 1 Failed (Silent)",
+      "Description": "VHF comm 1 radio has failed silently — the controller appears alive but no signal is transmitted or received.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/vhf/1/analog/state", "Value": 1 }]
+    },
+    {
+      "Id": "vhf_comm2_failed",
+      "Name": "VHF Comm 2 Failed (Hard)",
+      "Description": "VHF comm 2 radio has failed outright.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/vhf/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "vhf_comm2_analog",
+      "Name": "VHF Comm 2 Failed (Silent)",
+      "Description": "VHF comm 2 has failed silently.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/vhf/2/analog/state", "Value": 1 }]
+    },
+    {
+      "Id": "vhf_comm3_failed",
+      "Name": "VHF Comm 3 Failed",
+      "Description": "VHF comm 3 radio has failed.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/vhf/3/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "hf_comm1_failed",
+      "Name": "HF Comm 1 Failed",
+      "Description": "HF comm 1 radio has failed. Oceanic SELCAL coverage may be affected.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/hf/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "hf_comm2_failed",
+      "Name": "HF Comm 2 Failed",
+      "Description": "HF comm 2 radio has failed.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/hf/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cmu_failed",
+      "Name": "Communications Management Unit Failed",
+      "Description": "The CMU has failed. ACARS and datalink services are unavailable.",
+      "Category": "ATA 23 — Communications",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/comm/cmu/failed/state", "Value": 1 }]
+    },        
+    {
+      "Id": "ac_gen1_failed",
+      "Name": "AC Generator 1 Failed",
+      "Description": "AC Generator 1 has failed. Electrical loads have transferred to Generator 2. Monitor system carefully.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/gen/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_gen1_volt_regul_failed",
+      "Name": "Generator 1 Voltage Regulation Failed",
+      "Description": "Generator 1 voltage regulation has failed. Expect bus voltage fluctuations.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/gen/1/volt_regul_failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_gen2_failed",
+      "Name": "AC Generator 2 Failed",
+      "Description": "AC Generator 2 has failed.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/gen/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_gen2_volt_regul_failed",
+      "Name": "Generator 2 Voltage Regulation Failed",
+      "Description": "Generator 2 voltage regulation has failed.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/gen/2/volt_regul_failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_bus1_failed",
+      "Name": "AC Bus 1 Open Circuit",
+      "Description": "AC Bus 1 has an open circuit fault. All connected equipment has lost power.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/bus/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_bus2_failed",
+      "Name": "AC Bus 2 Open Circuit",
+      "Description": "AC Bus 2 has an open circuit fault.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/bus/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ac_ess_bus_failed",
+      "Name": "AC Essential Bus Open Circuit",
+      "Description": "AC Essential Bus has an open circuit. Essential AC-powered systems have lost power.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/ac/ess_bus/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "adg_failed",
+      "Name": "Air-Driven Generator Failed",
+      "Description": "The emergency ADG has failed. Emergency electrical power generation is unavailable if deployed.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/adg/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "adg_adcu_deploy",
+      "Name": "ADG Spurious Auto-Deployment",
+      "Description": "The ADG auto-deploy control unit has commanded a spurious deployment. The ram air turbine has deployed unexpectedly.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/adg/adcu_deploy/state", "Value": 1 }]
+    },
+    {
+      "Id": "tru1_failed",
+      "Name": "TRU 1 Failed",
+      "Description": "Transformer Rectifier Unit 1 has failed. DC Bus 1 is now sourced from TRU 2.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/tru/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "tru2_failed",
+      "Name": "TRU 2 Failed",
+      "Description": "Transformer Rectifier Unit 2 has failed.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/tru/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dc_bus1_failed",
+      "Name": "DC Bus 1 Open Circuit",
+      "Description": "DC Bus 1 has an open circuit. Multiple systems powered by this bus have failed.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/bus/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dc_bus2_failed",
+      "Name": "DC Bus 2 Open Circuit",
+      "Description": "DC Bus 2 has an open circuit.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/bus/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dc_ess_bus_failed",
+      "Name": "DC Essential Bus Open Circuit",
+      "Description": "DC Essential Bus has an open circuit. Essential DC equipment has lost power.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/bus/ess/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dc_emerg_bus_failed",
+      "Name": "Emergency DC Bus Open Circuit",
+      "Description": "The emergency DC bus has an open circuit. Last-resort emergency equipment may be unavailable.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/bus/emerg/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_batt_failed",
+      "Name": "Main Battery Failed",
+      "Description": "Main battery has failed outright. No battery backup for DC emergency power.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/main_batt/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_batt_low_volt",
+      "Name": "Main Battery Low Voltage",
+      "Description": "Main battery is showing low voltage. Battery backup capacity is significantly reduced.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/main_batt/low_volt/state", "Value": 1 }]
+    },
+    {
+      "Id": "apu_batt_failed",
+      "Name": "APU Battery Failed",
+      "Description": "APU battery has failed. APU start from battery power is unavailable.",
+      "Category": "ATA 24 — Electrical",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/elec/dc/apu_batt/failed/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng1_zone_a_fire_ext1",
+      "Name": "Engine 1 Zone A Fire (1-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 1 zone A. One fire extinguisher shot will clear this fire. Execute engine fire checklist immediately.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/1/zone/A/fire_ext_1/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng1_zone_a_fire_ext2",
+      "Name": "Engine 1 Zone A Fire (2-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 1 zone A. Requires both fire extinguisher shots. Use them wisely.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/1/zone/A/fire_ext_2/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng1_zone_a_fire_non_ext",
+      "Name": "Engine 1 Zone A Fire (Non-Extinguishable)",
+      "Description": "FIRE warning: engine 1 zone A — fire cannot be extinguished. Shutdown immediately and land as soon as possible. This is a MAYDAY.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/1/zone/A/fire_non_ext/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng1_zone_b_fire_ext1",
+      "Name": "Engine 1 Zone B Fire (1-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 1 zone B. One fire extinguisher shot will clear this fire.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/1/zone/B/fire_ext_1/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng1_zone_b_fire_non_ext",
+      "Name": "Engine 1 Zone B Fire (Non-Extinguishable)",
+      "Description": "FIRE warning: engine 1 zone B — unextinguishable. Shutdown and divert immediately.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/1/zone/B/fire_non_ext/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng2_zone_a_fire_ext1",
+      "Name": "Engine 2 Zone A Fire (1-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 2 zone A. One fire extinguisher shot will clear this fire. Execute engine fire checklist immediately.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/2/zone/A/fire_ext_1/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng2_zone_a_fire_ext2",
+      "Name": "Engine 2 Zone A Fire (2-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 2 zone A. Requires both fire extinguisher shots.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/2/zone/A/fire_ext_2/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng2_zone_a_fire_non_ext",
+      "Name": "Engine 2 Zone A Fire (Non-Extinguishable)",
+      "Description": "FIRE warning: engine 2 zone A — fire cannot be extinguished. This is a MAYDAY.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/2/zone/A/fire_non_ext/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng2_zone_b_fire_ext1",
+      "Name": "Engine 2 Zone B Fire (1-Shot Extinguishable)",
+      "Description": "FIRE warning: engine 2 zone B. One extinguisher shot will clear this fire.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/2/zone/B/fire_ext_1/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng2_zone_b_fire_non_ext",
+      "Name": "Engine 2 Zone B Fire (Non-Extinguishable)",
+      "Description": "FIRE warning: engine 2 zone B — unextinguishable. Shutdown and divert immediately.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/eng/2/zone/B/fire_non_ext/state", "Value": 1 }]
+    },
+    {
+      "Id": "apu_fire_ext",
+      "Name": "APU Fire (Extinguishable)",
+      "Description": "APU FIRE warning. Shut down APU and discharge fire extinguisher.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/apu/fire_ext/state", "Value": 1 }]
+    },
+    {
+      "Id": "apu_fire_non_ext",
+      "Name": "APU Fire (Non-Extinguishable)",
+      "Description": "APU FIRE warning — fire cannot be extinguished. Consider landing immediately.",
+      "Category": "ATA 26 — Fire Protection",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fireprot/apu/fire_non_ext/state", "Value": 1 }]
+    },        
+    {
+      "Id": "rudpedal_left_jammed",
+      "Name": "Left Rudder Pedals Jammed",
+      "Description": "Left rudder pedals are jammed in place. Rudder input from the left seat is unavailable.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/rudpedal/1/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "rudpedal_right_jammed",
+      "Name": "Right Rudder Pedals Jammed",
+      "Description": "Right rudder pedals are jammed in place.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/rudpedal/2/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "contwheel_left_jammed",
+      "Name": "Left Control Wheel Jammed",
+      "Description": "Left control wheel is jammed. Lateral control from the left seat is unavailable.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/contwheel/1/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "contcoll_left_jammed",
+      "Name": "Left Control Column Jammed",
+      "Description": "Left control column is jammed. Pitch control from the left seat is unavailable.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/contcoll/1/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "aileron_left_broken",
+      "Name": "Left Aileron Cables Broken",
+      "Description": "Left aileron control cables have broken. No lateral input from the left aileron.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/aileron/1/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "aileron_right_broken",
+      "Name": "Right Aileron Cables Broken",
+      "Description": "Right aileron control cables have broken.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/aileron/2/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "aileron_left_reversed",
+      "Name": "Left Aileron Cables Reversed",
+      "Description": "Left aileron control cables are connected backwards. Left lateral inputs will produce reversed roll response.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/aileron/1/reversed/state", "Value": 1 }]
+    },
+    {
+      "Id": "elevator_left_broken",
+      "Name": "Left Elevator Cables Broken",
+      "Description": "Left elevator control cables have broken. Pitch authority is significantly degraded.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/elevator/1/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "elevator_right_broken",
+      "Name": "Right Elevator Cables Broken",
+      "Description": "Right elevator control cables have broken.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/elevator/2/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "rudder_left_broken",
+      "Name": "Left Rudder Cables Broken",
+      "Description": "Left rudder control cables have broken. Directional control authority degraded.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/rudder/1/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "rudder_jammed",
+      "Name": "Rudder Jammed",
+      "Description": "Rudder is jammed and cannot move from its current position. Directional control by differential thrust only.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/rudder/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "rudder_trim_runaway",
+      "Name": "Rudder Trim Runaway",
+      "Description": "Rudder trim has runaway. The aircraft will yaw uncontrollably until manually overpowered.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/rudder/trim/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "aileron_trim_runaway",
+      "Name": "Aileron Trim Runaway",
+      "Description": "Aileron trim has runaway. The aircraft will roll uncontrollably — disconnect autopilot and overpower immediately.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/aileron/trim/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "stabtrim1_runaway",
+      "Name": "Stab Trim Channel 1 Runaway",
+      "Description": "Horizontal stabiliser trim channel 1 has runaway. Pitch may be uncontrollable — retard thrust and counter with elevator immediately.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/stabtrim/1/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "stabtrim2_runaway",
+      "Name": "Stab Trim Channel 2 Runaway",
+      "Description": "Horizontal stabiliser trim channel 2 has runaway.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/stabtrim/2/runaway/state", "Value": 1 }]
+    },
+    {
+      "Id": "stabtrim1_failed",
+      "Name": "Stab Trim Channel 1 Failed",
+      "Description": "Horizontal stabiliser trim channel 1 has failed. Trim authority is reduced.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/stabtrim/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "stabtrim2_failed",
+      "Name": "Stab Trim Channel 2 Failed",
+      "Description": "Horizontal stabiliser trim channel 2 has failed.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/stabtrim/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "flight_spoiler_left_deployed",
+      "Name": "Left Flight Spoiler Deployed",
+      "Description": "Left flight spoiler has deployed uncommanded. Significant roll and drag asymmetry — reduce speed.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/splr/flight/1/deployed/state", "Value": 1 }]
+    },
+    {
+      "Id": "flight_spoiler_right_deployed",
+      "Name": "Right Flight Spoiler Deployed",
+      "Description": "Right flight spoiler has deployed uncommanded.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/splr/flight/2/deployed/state", "Value": 1 }]
+    },
+    {
+      "Id": "flaps_motor1_failed",
+      "Name": "Flaps Motor 1 Failed",
+      "Description": "Flaps motor 1 has failed. Flap extension/retraction may be slower or asymmetric.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/flaps/motor/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "flaps_motor1_extend",
+      "Name": "Flaps Motor 1 Uncommanded Extension",
+      "Description": "Flaps motor 1 is commanding uncommanded flap extension. Expect asymmetry — act quickly.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/flaps/motor/1/extend/state", "Value": 1 }]
+    },
+    {
+      "Id": "flaps_motor1_retract",
+      "Name": "Flaps Motor 1 Uncommanded Retraction",
+      "Description": "Flaps motor 1 is commanding uncommanded flap retraction.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/flaps/motor/1/retract/state", "Value": 1 }]
+    },
+    {
+      "Id": "flaps_surf_left_jammed",
+      "Name": "Left Flaps Jammed (Asymmetry)",
+      "Description": "Left flap surface has jammed. Asymmetric flap extension — do not attempt to move flaps further.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/flaps/surf/1/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "flaps_surf_right_jammed",
+      "Name": "Right Flaps Jammed (Asymmetry)",
+      "Description": "Right flap surface has jammed creating asymmetric flap configuration.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/flaps/surf/2/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "sps_pusher_failed",
+      "Name": "Stick Pusher Failed",
+      "Description": "The stall protection stick pusher has failed. No automatic pusher response to stall — fly with extra care near low-speed limits.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/sps/pusher/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "sps_aoa1_false_high",
+      "Name": "Left AOA Vane False High Reading",
+      "Description": "Left AOA vane is giving a falsely high angle-of-attack reading. Stall protection system may respond to a phantom stall.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/sps/aoa/1/false_high/state", "Value": 1 }]
+    },
+    {
+      "Id": "sps_aoa2_false_high",
+      "Name": "Right AOA Vane False High Reading",
+      "Description": "Right AOA vane is giving a falsely high angle-of-attack reading.",
+      "Category": "ATA 27 — Flight Controls",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fctl/sps/aoa/2/false_high/state", "Value": 1 }]
+    },        
+    {
+      "Id": "fuel_tank_aux_leak_slow",
+      "Name": "Auxiliary Fuel Tank Slow Leak",
+      "Description": "Auxiliary fuel tank is slowly losing fuel. Monitor total quantity and plan accordingly.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/aux/leak/slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_aux_leak_fast",
+      "Name": "Auxiliary Fuel Tank Fast Leak",
+      "Description": "Auxiliary fuel tank is rapidly losing fuel. Immediate divert required.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/aux/leak/fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_main_left_leak_slow",
+      "Name": "Left Main Fuel Tank Slow Leak",
+      "Description": "Left main fuel tank is slowly leaking. Monitor fuel asymmetry — crossfeed may be required.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/main/left/leak/slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_main_left_leak_fast",
+      "Name": "Left Main Fuel Tank Fast Leak",
+      "Description": "Left main fuel tank is rapidly losing fuel. Divert immediately.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/main/left/leak/fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_main_right_leak_slow",
+      "Name": "Right Main Fuel Tank Slow Leak",
+      "Description": "Right main fuel tank is slowly leaking.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/main/right/leak/slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_main_right_leak_fast",
+      "Name": "Right Main Fuel Tank Fast Leak",
+      "Description": "Right main fuel tank is rapidly losing fuel.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/main/right/leak/fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_tail_leak_slow",
+      "Name": "Tail Fuel Tank Slow Leak",
+      "Description": "Tail tank is slowly leaking. Monitor CG as tail fuel quantity changes.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/tail/leak/slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_tank_tail_leak_fast",
+      "Name": "Tail Fuel Tank Fast Leak",
+      "Description": "Tail tank is rapidly losing fuel. CG shift may be rapid — divert immediately.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/tank/tail/leak/fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_pump_boost_left_failed",
+      "Name": "Left Fuel Boost Pump Failed",
+      "Description": "Left engine boost pump has failed. Left engine is running on suction feed only — limit altitude.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/pump/boost/left/operation/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_pump_boost_right_failed",
+      "Name": "Right Fuel Boost Pump Failed",
+      "Description": "Right engine boost pump has failed.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/pump/boost/right/operation/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_pump_primary_left_failed",
+      "Name": "Left Primary Ejector Pump Failed",
+      "Description": "Left primary ejector pump has failed. Fuel scavenging efficiency is reduced.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/pump/primary/left/state", "Value": 1 }]
+    },
+    {
+      "Id": "fuel_pump_primary_right_failed",
+      "Name": "Right Primary Ejector Pump Failed",
+      "Description": "Right primary ejector pump has failed.",
+      "Category": "ATA 28 — Fuel",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/fuel/pump/primary/right/state", "Value": 1 }]
+    },        
+    {
+      "Id": "hyd1_leak_slow",
+      "Name": "Hydraulic System 1 Slow Leak",
+      "Description": "Hydraulic system 1 is slowly losing fluid. Monitor quantity — you have time but not indefinitely.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/1/leak_slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd1_leak_fast",
+      "Name": "Hydraulic System 1 Catastrophic Leak",
+      "Description": "Hydraulic system 1 is losing fluid rapidly. Immediate checklist action required — system will be exhausted quickly.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/1/leak_fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd2_leak_slow",
+      "Name": "Hydraulic System 2 Slow Leak",
+      "Description": "Hydraulic system 2 is slowly losing fluid.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/2/leak_slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd2_leak_fast",
+      "Name": "Hydraulic System 2 Catastrophic Leak",
+      "Description": "Hydraulic system 2 is losing fluid rapidly.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/2/leak_fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd3_leak_slow",
+      "Name": "Hydraulic System 3 Slow Leak",
+      "Description": "Hydraulic system 3 is slowly losing fluid.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/3/leak_slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd3_leak_fast",
+      "Name": "Hydraulic System 3 Catastrophic Leak",
+      "Description": "Hydraulic system 3 is losing fluid rapidly.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/3/leak_fast/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd1_pump_a_failed",
+      "Name": "Hydraulic Engine-Driven Pump 1A Failed",
+      "Description": "Engine-driven hydraulic pump 1A has failed. System 1 pressure now maintained by electric pump 1B only.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/1/pump/A/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd1_pump_b_failed",
+      "Name": "Hydraulic Electric Pump 1B Failed",
+      "Description": "AC electric hydraulic pump 1B has failed. System 1 pressure now maintained by engine-driven pump only.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/1/pump/B/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd2_pump_a_failed",
+      "Name": "Hydraulic Engine-Driven Pump 2A Failed",
+      "Description": "Engine-driven hydraulic pump 2A has failed.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/2/pump/A/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd2_pump_b_failed",
+      "Name": "Hydraulic Electric Pump 2B Failed",
+      "Description": "AC electric hydraulic pump 2B has failed.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/2/pump/B/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd3_pump_a_failed",
+      "Name": "Hydraulic Electric Pump 3A Failed",
+      "Description": "AC electric hydraulic pump 3A has failed. System 3 pressure now maintained by pump 3B only.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/3/pump/A/state", "Value": 1 }]
+    },
+    {
+      "Id": "hyd3_pump_b_failed",
+      "Name": "Hydraulic Electric Pump 3B Failed",
+      "Description": "AC electric hydraulic pump 3B has failed.",
+      "Category": "ATA 29 — Hydraulics",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/hyd/3/pump/B/state", "Value": 1 }]
+    },        
+    {
+      "Id": "pitot_heat_left_failed",
+      "Name": "Pilot Pitot-Static Heat Failed",
+      "Description": "Pilot-side pitot-static heating element has failed. Risk of icing and airspeed errors in IMC.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/1/port/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot_heat_stby_failed",
+      "Name": "Standby Pitot Heat Failed",
+      "Description": "Standby pitot heat has failed. Standby airspeed unreliable in icing conditions.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/1/port/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "aoa_heat_left_failed",
+      "Name": "Left AOA Probe Heat Failed",
+      "Description": "Left angle-of-attack probe heater has failed. AOA data unreliable in icing conditions.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/1/port/3/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "static_heat_left_failed",
+      "Name": "Left Static Port Heat Failed",
+      "Description": "Left static port heating element has failed. Altitude and airspeed readings may be erroneous in icing.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/1/port/4/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot_heat_right_failed",
+      "Name": "Copilot Pitot-Static Heat Failed",
+      "Description": "Copilot-side pitot-static heating element has failed.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/2/port/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "tat_heat_failed",
+      "Name": "TAT Probe Heat Failed",
+      "Description": "Total air temperature probe heat has failed. TAT and SAT readings may be erroneous in icing.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/2/port/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "aoa_heat_right_failed",
+      "Name": "Right AOA Probe Heat Failed",
+      "Description": "Right angle-of-attack probe heater has failed.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/2/port/3/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "aoa_heat_aux_failed",
+      "Name": "Auxiliary AOA Probe Heat Failed",
+      "Description": "Auxiliary AOA probe heat has failed.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/adshc/2/port/5/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "wnd_heat1_failed",
+      "Name": "Left Window Heat Failed",
+      "Description": "Left side window heat has failed. Window may fog or ice over in cold conditions.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/wnd_heat/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "wnd_heat2_failed",
+      "Name": "Left Windshield Heat Failed",
+      "Description": "Left windshield heat has failed. Forward visibility may be affected in icing.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/wnd_heat/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "wnd_heat3_failed",
+      "Name": "Right Windshield Heat Failed",
+      "Description": "Right windshield heat has failed.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/wnd_heat/3/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ice_det1_failed",
+      "Name": "Left Ice Detector Failed",
+      "Description": "Left ice detector has failed. Icing conditions will not be automatically annunciated from this detector.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/ice_det/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ice_det2_failed",
+      "Name": "Right Ice Detector Failed",
+      "Description": "Right ice detector has failed.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/ice_det/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ice_det1_nodet",
+      "Name": "Left Ice Detector Cannot Detect Ice",
+      "Description": "Left ice detector is operational but cannot detect ice accumulation — silent failure.",
+      "Category": "ATA 30 — Ice & Rain Protection",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/iceprot/ice_det/1/nodet/state", "Value": 1 }]
+    },{
+      "Id": "reu1_failed",
+      "Name": "Remote Electronic Unit 1 Failed",
+      "Description": "REU 1 has failed. Multiple EICAS indications may be lost or erroneous.",
+      "Category": "ATA 31 — Indicating & Recording",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/indrec/reu/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "reu2_failed",
+      "Name": "Remote Electronic Unit 2 Failed",
+      "Description": "REU 2 has failed.",
+      "Category": "ATA 31 — Indicating & Recording",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/indrec/reu/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dcu1a_failed",
+      "Name": "Data Concentrator Unit 1A Failed",
+      "Description": "DCU 1A has failed. EICAS data from this unit is unavailable.",
+      "Category": "ATA 31 — Indicating & Recording",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/indrec/dcu/1a/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "dcu1b_failed",
+      "Name": "Data Concentrator Unit 1B Failed",
+      "Description": "DCU 1B has failed.",
+      "Category": "ATA 31 — Indicating & Recording",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/indrec/dcu/1b/failed/state", "Value": 1 }]
+    },{
+      "Id": "nscu_failed",
+      "Name": "Nosewheel Steering Control Unit Failed",
+      "Description": "NSCU has failed. Nosewheel steering is unavailable — use differential braking for ground directional control.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/nscu/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ascu1_failed",
+      "Name": "Inboard Anti-Skid Control Unit Failed",
+      "Description": "Inboard anti-skid control unit has failed. Do not brake hard on landing — risk of tyre burst.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/ascu/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ascu2_failed",
+      "Name": "Outboard Anti-Skid Control Unit Failed",
+      "Description": "Outboard anti-skid control unit has failed.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/ascu/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "gear_handle_failed",
+      "Name": "Landing Gear Handle Failed",
+      "Description": "The landing gear handle has failed. Gear may not respond to commands — prepare for manual gear extension.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/handle/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "gear_handle_jammed",
+      "Name": "Landing Gear Handle Jammed",
+      "Description": "Landing gear handle is jammed in its current position. Cannot cycle landing gear.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/handle/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nose_tire_puncture",
+      "Name": "Nose Gear Tyre Puncture",
+      "Description": "Both nose gear tyres have punctured. Directional control on landing rollout will be severely affected.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/nose/tire/puncture/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_left_tire_puncture",
+      "Name": "Left Main Gear Tyre Puncture",
+      "Description": "Both left main gear tyres have punctured. Landing rollout directional control will be affected.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/main/left/tire/puncture/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_right_tire_puncture",
+      "Name": "Right Main Gear Tyre Puncture",
+      "Description": "Both right main gear tyres have punctured.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/main/right/tire/puncture/state", "Value": 1 }]
+    },
+    {
+      "Id": "nose_gear_leg_uplock_open",
+      "Name": "Nose Gear Leg Uplock Failed Open",
+      "Description": "Nose gear leg uplock has failed to an open state. Nose gear may extend uncommanded.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/nose/leg/uplock/open/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_left_leg_uplock_open",
+      "Name": "Left Main Gear Leg Uplock Failed Open",
+      "Description": "Left main gear leg uplock has failed to an open state. Gear may extend uncommanded.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/main/left/leg/uplock/open/state", "Value": 1 }]
+    },
+    {
+      "Id": "main_right_leg_uplock_open",
+      "Name": "Right Main Gear Leg Uplock Failed Open",
+      "Description": "Right main gear leg uplock has failed to an open state.",
+      "Category": "ATA 32 — Landing Gear",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/gear/main/right/leg/uplock/open/state", "Value": 1 }]
+    },
+{
+      "Id": "pitot1_blocked",
+      "Name": "ADC 1 Pitot Tube Blocked",
+      "Description": "ADC 1 pitot tube is blocked. Pilot-side airspeed indication will be stuck or zero.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/1/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot1_leak_small",
+      "Name": "ADC 1 Pitot Tube Small Leak",
+      "Description": "ADC 1 pitot tube is leaking pressure. Pilot-side airspeed will read slightly low.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/1/leak_small/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot1_leak_large",
+      "Name": "ADC 1 Pitot Tube Large Leak",
+      "Description": "ADC 1 pitot tube is leaking significantly. Pilot-side airspeed will read near zero.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/1/leak_large/state", "Value": 1 }]
+    },
+    {
+      "Id": "static1_blocked",
+      "Name": "ADC 1 Static System Blocked",
+      "Description": "ADC 1 static system is blocked. Altitude and vertical speed indications on the pilot side will be frozen.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/static/1/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot2_blocked",
+      "Name": "ADC 2 Pitot Tube Blocked",
+      "Description": "ADC 2 pitot tube is blocked. Copilot-side airspeed indication will be stuck or zero.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/2/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot2_leak_small",
+      "Name": "ADC 2 Pitot Tube Small Leak",
+      "Description": "ADC 2 pitot tube is leaking. Copilot-side airspeed reads slightly low.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/2/leak_small/state", "Value": 1 }]
+    },
+    {
+      "Id": "pitot3_blocked",
+      "Name": "Standby Pitot Tube Blocked",
+      "Description": "Standby pitot tube is blocked. Standby airspeed will be stuck or zero.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/pitot/3/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "adc1_failed",
+      "Name": "Air Data Computer 1 Failed",
+      "Description": "ADC 1 has failed. PFD 1 air data now sourced from ADC 2. Cross-check with standby instruments.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/adc/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "adc2_failed",
+      "Name": "Air Data Computer 2 Failed",
+      "Description": "ADC 2 has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/ads/adc/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "hud_failed",
+      "Name": "Heads-Up Display Failed",
+      "Description": "The HUD has failed. Revert to head-down instrument scan.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/hud/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "pfd1_failed",
+      "Name": "PFD 1 Failed",
+      "Description": "PFD 1 has failed. Pilot must use the MFD in reversionary mode or standby instruments.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/pfd/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "pfd2_failed",
+      "Name": "PFD 2 Failed",
+      "Description": "PFD 2 has failed. Copilot must use the MFD in reversionary mode.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/pfd/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "mfd1_failed",
+      "Name": "MFD 1 Failed",
+      "Description": "MFD 1 has failed. Navigation and systems displays from this screen are unavailable.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/mfd/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "mfd2_failed",
+      "Name": "MFD 2 Failed",
+      "Description": "MFD 2 has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/mfd/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "isi_failed",
+      "Name": "Integrated Standby Instrument Failed",
+      "Description": "The ISI has failed. Standby attitude, airspeed and altitude backup is unavailable.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/isi/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "isi_att_drift",
+      "Name": "ISI Attitude Drifting",
+      "Description": "ISI attitude indication is randomly drifting. Do not rely on standby attitude reference.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/efis/isi/att_drift/state", "Value": 1 }]
+    },
+    {
+      "Id": "ra1_failed",
+      "Name": "Radio Altimeter 1 Failed",
+      "Description": "Radio altimeter 1 has failed. GPWS/TAWS and decision height alerting will use RA 2 only.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/ra/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "ra1_erratic",
+      "Name": "Radio Altimeter 1 Erratic",
+      "Description": "Radio altimeter 1 will randomly read 0 ft. Cross-check with RA 2 near the ground.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/ra/1/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "ra2_failed",
+      "Name": "Radio Altimeter 2 Failed",
+      "Description": "Radio altimeter 2 has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/ra/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav1_failed",
+      "Name": "VHF NAV 1 Failed (Hard)",
+      "Description": "VHF NAV 1 radio has failed outright. ILS/VOR guidance on NAV 1 is lost.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav1_vloc_failed",
+      "Name": "VHF NAV 1 VOR/LOC Receiver Failed",
+      "Description": "NAV 1 VOR/LOC receiver has failed. ILS localiser and VOR guidance are unavailable on NAV 1.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/1/vloc_failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav1_vloc_drift",
+      "Name": "VHF NAV 1 VOR/LOC Indication Drifting",
+      "Description": "NAV 1 VOR/LOC indication is randomly drifting. Do not rely on it for approaches.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/1/vloc_drift/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav1_gs_failed",
+      "Name": "VHF NAV 1 Glideslope Receiver Failed",
+      "Description": "NAV 1 glideslope receiver has failed. ILS glideslope guidance is unavailable on NAV 1.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/1/gs_failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav1_gs_drift",
+      "Name": "VHF NAV 1 Glideslope Indication Drifting",
+      "Description": "NAV 1 glideslope indication is randomly drifting. Do not use for precision approaches.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/1/gs_drift/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav2_failed",
+      "Name": "VHF NAV 2 Failed (Hard)",
+      "Description": "VHF NAV 2 radio has failed outright.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav2_vloc_drift",
+      "Name": "VHF NAV 2 VOR/LOC Indication Drifting",
+      "Description": "NAV 2 VOR/LOC indication is randomly drifting.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/2/vloc_drift/state", "Value": 1 }]
+    },
+    {
+      "Id": "nav2_gs_drift",
+      "Name": "VHF NAV 2 Glideslope Indication Drifting",
+      "Description": "NAV 2 glideslope indication is randomly drifting.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/nav/2/gs_drift/state", "Value": 1 }]
+    },
+    {
+      "Id": "gps1_failed",
+      "Name": "GPS 1 Receiver Failed",
+      "Description": "GPS 1 receiver has failed. RNAV approaches requiring GPS 1 are unavailable.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/gps/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "gps2_failed",
+      "Name": "GPS 2 Receiver Failed",
+      "Description": "GPS 2 receiver has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/gps/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "gps_accur_low",
+      "Name": "GPS Accuracy Degraded",
+      "Description": "GPS service accuracy is degraded. RNAV approaches may not meet required navigation performance.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/gps/accur_low/state", "Value": 1 }]
+    },
+    {
+      "Id": "gps_jammed",
+      "Name": "GPS Jamming",
+      "Description": "GPS service is being jammed. All GPS-based navigation is unavailable. Revert to conventional navigation.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/sensors/rss/gps/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fmc1_failed",
+      "Name": "Flight Management Computer 1 Failed",
+      "Description": "FMC 1 has failed. LNAV/VNAV guidance from FMC 1 is unavailable.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/fms/fmc/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fmc2_failed",
+      "Name": "Flight Management Computer 2 Failed",
+      "Description": "FMC 2 has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/fms/fmc/2/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "fmc_xtalk_failed",
+      "Name": "FMC Cross-Talk Failed",
+      "Description": "Cross-talk between FMCs has failed. Both FMCs are operating independently — they may diverge.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/fms/fmc/xtalk_failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cdu1_failed",
+      "Name": "CDU 1 Failed",
+      "Description": "Control Display Unit 1 has failed. FMS input from the left CDU is unavailable.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/fms/cdu/1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "cdu2_failed",
+      "Name": "CDU 2 Failed",
+      "Description": "Control Display Unit 2 has failed.",
+      "Category": "ATA 34 — Navigation",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/avionics/fms/cdu/2/failed/state", "Value": 1 }]
+    }, 
+    {
+      "Id": "oxygen_mask_left_blocked",
+      "Name": "Left Oxygen Mask Blocked",
+      "Description": "Left crew oxygen mask is blocked. If depressurisation occurs, the left seat has no mask protection.",
+      "Category": "ATA 35 — Oxygen",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/oxygen/mask/left/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "oxygen_mask_right_blocked",
+      "Name": "Right Oxygen Mask Blocked",
+      "Description": "Right crew oxygen mask is blocked.",
+      "Category": "ATA 35 — Oxygen",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/oxygen/mask/right/blocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "oxygen_tank_leak_slow",
+      "Name": "Oxygen Tank Slow Leak",
+      "Description": "Oxygen tank is slowly leaking. Time-on-oxygen in an emergency depressurisation is reduced.",
+      "Category": "ATA 35 — Oxygen",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/oxygen/tank/leak/slow/state", "Value": 1 }]
+    },
+    {
+      "Id": "oxygen_tank_leak_fast",
+      "Name": "Oxygen Tank Fast Leak",
+      "Description": "Oxygen tank is leaking quickly. If combined with depressurisation, crew oxygen time is critically short.",
+      "Category": "ATA 35 — Oxygen",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/oxygen/tank/leak/fast/state", "Value": 1 }]
+    },        
+    {
+      "Id": "pneu_10th_sov_left_stuck",
+      "Name": "Left 10th Stage Bleed SOV Stuck",
+      "Description": "Left 10th stage bleed shutoff valve is stuck. Bleed air management for the left engine is compromised.",
+      "Category": "ATA 36 — Pneumatic",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/pneu/10th/sov/left/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "pneu_10th_sov_right_stuck",
+      "Name": "Right 10th Stage Bleed SOV Stuck",
+      "Description": "Right 10th stage bleed shutoff valve is stuck.",
+      "Category": "ATA 36 — Pneumatic",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/pneu/10th/sov/right/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "pneu_14th_wai_left_stuck",
+      "Name": "Left Wing Anti-Ice Valve Stuck",
+      "Description": "Left wing anti-ice valve is stuck. Left wing anti-icing is unavailable.",
+      "Category": "ATA 36 — Pneumatic",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/pneu/14th/wai/left/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "pneu_14th_wai_right_stuck",
+      "Name": "Right Wing Anti-Ice Valve Stuck",
+      "Description": "Right wing anti-ice valve is stuck.",
+      "Category": "ATA 36 — Pneumatic",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/pneu/14th/wai/right/stuck/state", "Value": 1 }]
+    },        
+    {
+      "Id": "apu_starter_failed",
+      "Name": "APU Starter Failed",
+      "Description": "APU starter has failed. APU cannot be started — ground power or engine bleed required.",
+      "Category": "ATA 49 — APU",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/apu/starter/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "apu_weak",
+      "Name": "APU Extremely Worn Out",
+      "Description": "APU is extremely weak and worn out. Output power and bleed capacity are severely limited.",
+      "Category": "ATA 49 — APU",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/apu/weak/state", "Value": 1 }]
+    },
+    {
+      "Id": "apu_overspeed",
+      "Name": "APU Overspeed",
+      "Description": "APU is overspeeding. Automatic shutdown may occur.",
+      "Category": "ATA 49 — APU",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/apu/control/overspeed/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_n1_vib_high",
+      "Name": "Left Engine N1 Vibration High",
+      "Description": "Left engine is experiencing excessive N1 vibration. Monitor closely — consider power reduction.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/n1_vib_high/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_n2_vib_high",
+      "Name": "Left Engine N2 Vibration High",
+      "Description": "Left engine core is experiencing excessive N2 vibration. May indicate bearing damage.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/n2_vib_high/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_compr_stall_trans",
+      "Name": "Left Engine Compressor Stall (Transient)",
+      "Description": "Left engine compressor stall — transient, self-clearing. Monitor N1 and ITT for recurrence.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/compr/stall/trans/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_compr_stall_clear",
+      "Name": "Left Engine Compressor Stall (Clearable)",
+      "Description": "Left engine compressor stall — clearable by reducing power. Act promptly.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/compr/stall/clear/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_compr_stall_non_clear",
+      "Name": "Left Engine Compressor Stall (Non-Clearable)",
+      "Description": "Left engine compressor stall — cannot be cleared by any means. Engine shutdown required.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/compr/stall/non_clear/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_combust_instability",
+      "Name": "Left Engine Combustion Instability",
+      "Description": "Left engine combustion is unstable. Thrust fluctuations are likely.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/combust/instability/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_flameout_trans",
+      "Name": "Left Engine Momentary Flameout",
+      "Description": "Left engine has flamed out momentarily — relight may be possible. Execute engine relight checklist.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/combust/flameout/trans/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_flameout_perm",
+      "Name": "Left Engine Permanent Flameout",
+      "Description": "Left engine has permanently flamed out and will not relight. Single-engine operations required.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/combust/flameout/perm/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_fan_rotor_locked",
+      "Name": "Left Engine Fan Rotor Locked",
+      "Description": "Left engine fan rotor shaft is locked. The engine is seized — unrecoverable.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/fan/rotor/locked/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_compr_rotor_locked",
+      "Name": "Left Engine Core Rotor Locked",
+      "Description": "Left engine core rotor shaft is locked. The engine is seized — unrecoverable.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/compr/rotor/locked/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_n1_vib_high",
+      "Name": "Right Engine N1 Vibration High",
+      "Description": "Right engine is experiencing excessive N1 vibration. Monitor closely.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/n1_vib_high/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_n2_vib_high",
+      "Name": "Right Engine N2 Vibration High",
+      "Description": "Right engine core is experiencing excessive N2 vibration.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/n2_vib_high/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_compr_stall_clear",
+      "Name": "Right Engine Compressor Stall (Clearable)",
+      "Description": "Right engine compressor stall — clearable by reducing power.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/compr/stall/clear/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_compr_stall_non_clear",
+      "Name": "Right Engine Compressor Stall (Non-Clearable)",
+      "Description": "Right engine compressor stall — cannot be cleared. Engine shutdown required.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/compr/stall/non_clear/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_combust_instability",
+      "Name": "Right Engine Combustion Instability",
+      "Description": "Right engine combustion is unstable. Thrust fluctuations likely.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/combust/instability/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_flameout_trans",
+      "Name": "Right Engine Momentary Flameout",
+      "Description": "Right engine has flamed out momentarily — relight may be possible.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/combust/flameout/trans/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_flameout_perm",
+      "Name": "Right Engine Permanent Flameout",
+      "Description": "Right engine has permanently flamed out and will not relight.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/combust/flameout/perm/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_fan_rotor_locked",
+      "Name": "Right Engine Fan Rotor Locked",
+      "Description": "Right engine fan rotor shaft is locked. The engine is seized — unrecoverable.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/fan/rotor/locked/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_compr_rotor_locked",
+      "Name": "Right Engine Core Rotor Locked",
+      "Description": "Right engine core rotor shaft is locked. Unrecoverable.",
+      "Category": "ATA 72 — Engine",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/compr/rotor/locked/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_fcu_erratic",
+      "Name": "Left Engine Fuel Control Erratic",
+      "Description": "Left engine FCU is erratic. Thrust output will be unpredictable — manual intervention may be required.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/fcu/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_fcu_failed",
+      "Name": "Left Engine Fuel Control Failed",
+      "Description": "Left engine fuel control unit has failed. Engine thrust is uncontrollable — shutdown required.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/fcu/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_fcu_clogged",
+      "Name": "Left Engine Fuel Nozzles Clogged",
+      "Description": "Left engine fuel nozzles are clogged. Combustion efficiency is reduced — monitor ITT.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/fcu/clogged/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_n1ctl_erratic",
+      "Name": "Left Engine N1 Control Amplifier Erratic",
+      "Description": "Left N1 control amplifier is erratic. Thrust setting may fluctuate.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/n1ctl/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_n1ctl_stuck",
+      "Name": "Left Engine N1 Control Stuck at Minimum",
+      "Description": "Left engine N1 control amplifier is stuck at minimum power. Left engine thrust is at idle.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/n1ctl/stuck/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_fcu_erratic",
+      "Name": "Right Engine Fuel Control Erratic",
+      "Description": "Right engine FCU is erratic. Thrust output will be unpredictable.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/fcu/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_fcu_failed",
+      "Name": "Right Engine Fuel Control Failed",
+      "Description": "Right engine fuel control unit has failed. Shutdown required.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/fcu/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_n1ctl_stuck",
+      "Name": "Right Engine N1 Control Stuck at Minimum",
+      "Description": "Right engine N1 control amplifier is stuck at minimum power.",
+      "Category": "ATA 73 — Engine Fuel & Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/n1ctl/stuck/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_ign_a_failed",
+      "Name": "Left Engine Ignition System A Failed",
+      "Description": "Left engine ignition system A has failed. Relight capability is degraded.",
+      "Category": "ATA 74 — Ignition",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ign/A/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_ign_b_failed",
+      "Name": "Left Engine Ignition System B Failed",
+      "Description": "Left engine ignition system B has failed.",
+      "Category": "ATA 74 — Ignition",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ign/B/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_ign_a_failed",
+      "Name": "Right Engine Ignition System A Failed",
+      "Description": "Right engine ignition system A has failed.",
+      "Category": "ATA 74 — Ignition",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ign/A/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_ign_b_failed",
+      "Name": "Right Engine Ignition System B Failed",
+      "Description": "Right engine ignition system B has failed.",
+      "Category": "ATA 74 — Ignition",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ign/B/failed/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_thro_jammed",
+      "Name": "Left Thrust Lever Jammed",
+      "Description": "Left thrust lever is jammed at its current position. Cannot change left engine thrust setting.",
+      "Category": "ATA 76 — Engine Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ctl/thro/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_thro_broken",
+      "Name": "Left Thrust Control Cable Broken",
+      "Description": "Left engine thrust control cable has broken. Left engine is stuck at current FCU setting.",
+      "Category": "ATA 76 — Engine Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ctl/thro/broken/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_thro_jammed",
+      "Name": "Right Thrust Lever Jammed",
+      "Description": "Right thrust lever is jammed at its current position.",
+      "Category": "ATA 76 — Engine Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ctl/thro/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_thro_broken",
+      "Name": "Right Thrust Control Cable Broken",
+      "Description": "Right engine thrust control cable has broken.",
+      "Category": "ATA 76 — Engine Control",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ctl/thro/broken/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_n1_ind_failed",
+      "Name": "Left Engine N1 Indication Failed",
+      "Description": "Left engine N1 gauge has failed. Actual engine thrust is unaffected — use ITT and N2 for reference.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ind/n1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_n1_ind_erratic",
+      "Name": "Left Engine N1 Indication Erratic",
+      "Description": "Left engine N1 gauge is showing erratic readings. Actual thrust is unaffected.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ind/n1/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_itt_ind_failed",
+      "Name": "Left Engine ITT Indication Failed",
+      "Description": "Left engine ITT gauge has failed. Temperature monitoring for the left engine is unavailable.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ind/itt/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_itt_ind_erratic",
+      "Name": "Left Engine ITT Indication Erratic",
+      "Description": "Left engine ITT gauge is erratic. Monitor N1 and N2 closely.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/ind/itt/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_n1_ind_failed",
+      "Name": "Right Engine N1 Indication Failed",
+      "Description": "Right engine N1 gauge has failed.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ind/n1/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_n1_ind_erratic",
+      "Name": "Right Engine N1 Indication Erratic",
+      "Description": "Right engine N1 gauge is showing erratic readings.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ind/n1/erratic/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_itt_ind_failed",
+      "Name": "Right Engine ITT Indication Failed",
+      "Description": "Right engine ITT gauge has failed.",
+      "Category": "ATA 77 — Engine Indicating",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/ind/itt/failed/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_rev_jammed",
+      "Name": "Left Reverser Jammed in Position",
+      "Description": "Left engine reverser is jammed in its current position. Do not attempt to cycle it.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/rev/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_rev_unlocked",
+      "Name": "Left Reverser Locks Open",
+      "Description": "Left engine reverser locks have failed to an open state. Reverser may deploy unexpectedly.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/rev/unlocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_rev_deploy",
+      "Name": "Left Reverser Uncommanded Deployment",
+      "Description": "Left thrust reverser has deployed in flight. Catastrophic asymmetric drag — reduce thrust immediately and counter with full right rudder.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/rev/deploy/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_rev_jammed",
+      "Name": "Right Reverser Jammed in Position",
+      "Description": "Right engine reverser is jammed in its current position.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/rev/jammed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_rev_unlocked",
+      "Name": "Right Reverser Locks Open",
+      "Description": "Right engine reverser locks have failed open. Reverser may deploy unexpectedly.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/rev/unlocked/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_rev_deploy",
+      "Name": "Right Reverser Uncommanded Deployment",
+      "Description": "Right thrust reverser has deployed in flight. Catastrophic asymmetric drag — this is immediately life-threatening.",
+      "Category": "ATA 78 — Exhaust",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/rev/deploy/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_oil_pump_failed",
+      "Name": "Left Engine Oil Pump Failed",
+      "Description": "Left engine oil pump has failed. Engine oil pressure will drop — shutdown required to prevent seizure.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/oil/pump/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_oil_pump_weak",
+      "Name": "Left Engine Oil Pump Weak",
+      "Description": "Left engine oil pump is producing low pressure. Monitor oil pressure — shutdown if it falls below limits.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/oil/pump/weak/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_oil_burning",
+      "Name": "Left Engine Oil Burning (Gas Path Leak)",
+      "Description": "Left engine is burning oil too quickly due to a gas path seal leak. Oil quantity will deplete — monitor closely.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/oil/burning/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_oil_pump_failed",
+      "Name": "Right Engine Oil Pump Failed",
+      "Description": "Right engine oil pump has failed. Shutdown required to prevent engine seizure.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/oil/pump/failed/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_oil_pump_weak",
+      "Name": "Right Engine Oil Pump Weak",
+      "Description": "Right engine oil pump is producing low pressure.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/oil/pump/weak/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_oil_burning",
+      "Name": "Right Engine Oil Burning (Gas Path Leak)",
+      "Description": "Right engine is burning oil too quickly due to a gas path seal leak.",
+      "Category": "ATA 79 — Oil",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/oil/burning/state", "Value": 1 }]
+    },        
+    {
+      "Id": "eng_left_start_hung",
+      "Name": "Left Engine Hung Start",
+      "Description": "Left engine is hung during start — N2 has stabilised below idle due to weak cranking. Abort start.",
+      "Category": "ATA 80 — Starting",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/start/hung/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_left_start_hot",
+      "Name": "Left Engine Hot Start",
+      "Description": "Left engine is experiencing a hot start — ITT is rising rapidly. Monitor and abort if limits are approached.",
+      "Category": "ATA 80 — Starting",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/left/start/hot/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_start_hung",
+      "Name": "Right Engine Hung Start",
+      "Description": "Right engine is hung during start.",
+      "Category": "ATA 80 — Starting",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/start/hung/state", "Value": 1 }]
+    },
+    {
+      "Id": "eng_right_start_hot",
+      "Name": "Right Engine Hot Start",
+      "Description": "Right engine is experiencing a hot start.",
+      "Category": "ATA 80 — Starting",
+      "SuggestedTier": "Minor",
+      "Actions": [{ "Dataref": "CL650/failures/systems/eng/right/start/hot/state", "Value": 1 }]
+    },        
+    {
+      "Id": "birdstrike_windshield",
+      "Name": "Birdstrike — Left Windshield",
+      "Description": "Birdstrike has shattered the outer pane of the left windshield. Forward visibility is impaired.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/birdstrike/windshield/state", "Value": 1 }]
+    },
+    {
+      "Id": "birdstrike_eng_left",
+      "Name": "Birdstrike — Left Engine (Fatal)",
+      "Description": "Birdstrike has caused a non-recoverable left engine failure. Single-engine operations required.",
+      "Category": "Environmental",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/env/birdstrike/eng/left/state", "Value": 1 }]
+    },
+    {
+      "Id": "birdstrike_eng_right",
+      "Name": "Birdstrike — Right Engine (Fatal)",
+      "Description": "Birdstrike has caused a non-recoverable right engine failure.",
+      "Category": "Environmental",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/env/birdstrike/eng/right/state", "Value": 1 }]
+    },
+    {
+      "Id": "birdstrike_pitot_left",
+      "Name": "Birdstrike — Left Pitot Blocked",
+      "Description": "Birdstrike has blocked the left pitot tube. Pilot-side airspeed indication is unreliable.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/birdstrike/pitot/left/state", "Value": 1 }]
+    },
+    {
+      "Id": "birdstrike_pitot_right",
+      "Name": "Birdstrike — Right Pitot Blocked",
+      "Description": "Birdstrike has blocked the right pitot tube.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/birdstrike/pitot/right/state", "Value": 1 }]
+    },
+    {
+      "Id": "microburst",
+      "Name": "Microburst / Windshear Encounter",
+      "Description": "The aircraft has encountered a microburst. Severe windshear — maximum thrust, follow escape manoeuvre.",
+      "Category": "Environmental",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/env/microburst/state", "Value": 1 }]
+    },
+    {
+      "Id": "smoke_cockpit_nonclr",
+      "Name": "Cockpit Smoke (Non-Clearable)",
+      "Description": "Smoke in the cockpit that cannot be cleared. Don oxygen masks and initiate emergency descent.",
+      "Category": "Environmental",
+      "SuggestedTier": "Severe",
+      "Actions": [{ "Dataref": "CL650/failures/env/smoke/cockpit/nonclr/state", "Value": 1 }]
+    },
+    {
+      "Id": "smoke_cockpit_pack_left",
+      "Name": "Cockpit Smoke from Left Pack",
+      "Description": "Smoke in the cockpit sourced from the left air conditioning pack. Shut off left pack and check for clearance.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/smoke/cockpit/pack/left/state", "Value": 1 }]
+    },
+    {
+      "Id": "smoke_cockpit_pack_right",
+      "Name": "Cockpit Smoke from Right Pack",
+      "Description": "Smoke in the cockpit sourced from the right air conditioning pack.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/smoke/cockpit/pack/right/state", "Value": 1 }]
+    },
+    {
+      "Id": "smoke_baggage",
+      "Name": "Baggage Bay Smoke",
+      "Description": "Smoke detected in the baggage bay. Initiate cargo smoke checklist — consider diverting.",
+      "Category": "Environmental",
+      "SuggestedTier": "Moderate",
+      "Actions": [{ "Dataref": "CL650/failures/env/smoke/baggage/state", "Value": 1 }]
+    }  
+  ]
+}

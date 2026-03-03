@@ -4,13 +4,12 @@ using ChaosPlane.Models;
 namespace ChaosPlane.Services;
 
 /// <summary>
-/// Loads and saves appsettings.json — the main application configuration.
-/// Wraps the typed AppSettings model.
+/// Loads and saves appsettings.json from AppData.
+/// On first run (file not found), writes a default settings file using the
+/// supplied clientId so the app is functional immediately after a clean build.
 /// </summary>
-public class SettingsService
+public class SettingsService(string path)
 {
-    private readonly string _path;
-
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented               = true,
@@ -19,36 +18,33 @@ public class SettingsService
         AllowTrailingCommas         = true
     };
 
-    public SettingsService(string path)
-    {
-        _path    = path;
-        Settings = new AppSettings(); // safe default until LoadAsync is called
-    }
-
-    public AppSettings Settings { get; private set; }
+    public AppSettings Settings { get; private set; } = new();
 
     /// <summary>
-    /// Loads appsettings.json from disk. If the file doesn't exist, starts
-    /// with default settings (matching the shipped appsettings.json template).
+    /// Loads appsettings.json. If the file doesn't exist, saves defaults
+    /// (including the hardcoded Client ID) so it's created for next time.
     /// </summary>
     public async Task LoadAsync()
     {
-        if (!File.Exists(_path))
-            return; // keep defaults
+        if (!File.Exists(path))
+        {
+            // First run — persist defaults so token/reward IDs can be saved later
+            await SaveAsync();
+            return;
+        }
 
         try
         {
-            await using var stream = File.OpenRead(_path);
+            await using var stream = File.OpenRead(path);
             var loaded = await JsonSerializer.DeserializeAsync<AppSettings>(stream, JsonOptions);
             if (loaded == null) return;
-
-            // Mutate the existing object so all services holding a reference stay in sync
+            
             Settings.Twitch.ChannelName       = loaded.Twitch.ChannelName;
             Settings.Twitch.BroadcasterUserId = loaded.Twitch.BroadcasterUserId;
             Settings.Twitch.AccessToken       = loaded.Twitch.AccessToken;
-            Settings.Twitch.RewardIds.Minor         = loaded.Twitch.RewardIds.Minor;
-            Settings.Twitch.RewardIds.Moderate      = loaded.Twitch.RewardIds.Moderate;
-            Settings.Twitch.RewardIds.Severe        = loaded.Twitch.RewardIds.Severe;
+            Settings.Twitch.RewardIds.Minor          = loaded.Twitch.RewardIds.Minor;
+            Settings.Twitch.RewardIds.Moderate       = loaded.Twitch.RewardIds.Moderate;
+            Settings.Twitch.RewardIds.Severe         = loaded.Twitch.RewardIds.Severe;
             Settings.Twitch.RewardIds.PickYourPoison = loaded.Twitch.RewardIds.PickYourPoison;
 
             Settings.XPlane.Host = loaded.XPlane.Host;
@@ -66,6 +62,9 @@ public class SettingsService
             Settings.Rewards.PickYourPoison.Title   = loaded.Rewards.PickYourPoison.Title;
             Settings.Rewards.PickYourPoison.Cost    = loaded.Rewards.PickYourPoison.Cost;
             Settings.Rewards.PickYourPoison.Enabled = loaded.Rewards.PickYourPoison.Enabled;
+
+            if (!string.IsNullOrEmpty(loaded.Ebs.Url))
+                Settings.Ebs.Url = loaded.Ebs.Url;
         }
         catch (JsonException)
         {
@@ -77,6 +76,6 @@ public class SettingsService
     public async Task SaveAsync()
     {
         var json = JsonSerializer.Serialize(Settings, JsonOptions);
-        await File.WriteAllTextAsync(_path, json);
+        await File.WriteAllTextAsync(path, json);
     }
 }

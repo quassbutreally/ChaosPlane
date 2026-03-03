@@ -5,6 +5,7 @@ public class AppSettings
     public TwitchSettings  Twitch  { get; set; } = new();
     public XPlaneSettings  XPlane  { get; set; } = new();
     public RewardsSettings Rewards { get; set; } = new();
+    public EbsSettings     Ebs     { get; set; } = new();
 }
 
 public class TwitchSettings
@@ -62,6 +63,11 @@ public class RewardsSettings
         FailureTier.Severe   => Severe,
         _                    => throw new ArgumentOutOfRangeException(nameof(tier))
     };
+}
+
+public class EbsSettings
+{
+    public string Url { get; set; } = "wss://chaosplane-production.up.railway.app/relay";
 }
 
 public class RewardConfig
