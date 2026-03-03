@@ -94,22 +94,22 @@ public class PubSubService(IOptions<TwitchConfig> config, ILogger<PubSubService>
         var key         = new SymmetricSecurityKey(secretBytes);
         var creds       = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
+        var exp = DateTimeOffset.UtcNow.AddMinutes(1).ToUnixTimeSeconds();
+
+        var payload = new JwtPayload
         {
-            new Claim("exp",        DateTimeOffset.UtcNow.AddMinutes(1).ToUnixTimeSeconds().ToString()),
-            new Claim("user_id",    _config.BroadcasterUserId),
-            new Claim("role",       "external"),
-            new Claim("channel_id", _config.BroadcasterUserId),
-            new Claim("pubsub_perms", JsonSerializer.Serialize(new
-            {
-                send = new[] { "broadcast" }
-            }))
+            { "exp",     exp },
+            { "user_id", _config.BroadcasterUserId },
+            { "role",    "external" },
+            { "pubsub_perms", new Dictionary<string, object>
+                {
+                    { "send", new[] { "broadcast" } }
+                }
+            }
         };
 
-        var token = new JwtSecurityToken(
-            claims:            claims,
-            signingCredentials: creds);
-
+        var header  = new JwtHeader(creds);
+        var token   = new JwtSecurityToken(header, payload);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
