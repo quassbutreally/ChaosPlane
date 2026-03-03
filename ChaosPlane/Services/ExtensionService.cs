@@ -15,6 +15,7 @@ namespace ChaosPlane.Services;
 public class ExtensionService : IAsyncDisposable
 {
     private readonly AppSettings _settings;
+    private readonly HttpClient  _http = new();
 
     private ClientWebSocket? _ws;
     private CancellationTokenSource? _cts;
@@ -43,6 +44,35 @@ public class ExtensionService : IAsyncDisposable
         _settings = settings;
     }
 
+    // ── Public: active failure broadcast ─────────────────────────────────────
+
+    /// <summary>
+    /// Posts the current active failure IDs to the EBS, which broadcasts
+    /// them to all viewers watching the extension panel.
+    /// Call this whenever the active failure list changes.
+    /// </summary>
+    public async Task PublishActiveFailuresAsync(IEnumerable<string> failureIds)
+    {
+        if (!_connected) return;
+
+        try
+        {
+            var ebsHttpUrl = _settings.Ebs.Url
+                .Replace("wss://", "https://")
+                .Replace("ws://",  "http://")
+                .Replace("/relay", "");
+
+            var json    = JsonSerializer.Serialize(new { failureIds = failureIds.ToArray() });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            await _http.PostAsync($"{ebsHttpUrl}/active-failures", content);
+        }
+        catch
+        {
+            // Non-critical — viewers will just see stale state
+        }
+    }
+
     // ── Connection ────────────────────────────────────────────────────────────
 
     /// <summary>
@@ -57,7 +87,7 @@ public class ExtensionService : IAsyncDisposable
 
     public async Task StopAsync()
     {
-        await _cts?.CancelAsync()!;
+        _cts?.Cancel();
 
         if (_ws != null)
         {
@@ -114,23 +144,39 @@ public class ExtensionService : IAsyncDisposable
 
     private async Task ReceiveLoopAsync(CancellationToken ct)
     {
-        var buffer = new byte[4096];
-
-        while (_ws!.State == WebSocketState.Open && !ct.IsCancellationRequested)
+        var buffer  = new byte[4096];
+        var ping    = new Timer(_ =>
         {
-            var result = await _ws.ReceiveAsync(buffer, ct);
+            if (_ws?.State == WebSocketState.Open)
+                _ = _ws.SendAsync(
+                    new ArraySegment<byte>(Array.Empty<byte>()),
+                    WebSocketMessageType.Binary,
+                    true,
+                    CancellationToken.None);
+        }, null, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30));
 
-            if (result.MessageType == WebSocketMessageType.Close)
-                break;
+        try
+        {
+            while (_ws!.State == WebSocketState.Open && !ct.IsCancellationRequested)
+            {
+                var result = await _ws.ReceiveAsync(buffer, ct);
 
-            if (result.MessageType != WebSocketMessageType.Text)
-                continue;
+                if (result.MessageType == WebSocketMessageType.Close)
+                    break;
 
-            var json    = Encoding.UTF8.GetString(buffer, 0, result.Count);
-            var message = JsonSerializer.Deserialize<RelayMessage>(json, JsonOptions);
+                if (result.MessageType != WebSocketMessageType.Text)
+                    continue;
 
-            if (message?.Type == "trigger" && message.Payload != null)
-                await HandleTriggerAsync(message.Payload);
+                var json    = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                var message = JsonSerializer.Deserialize<RelayMessage>(json, JsonOptions);
+
+                if (message?.Type == "trigger" && message.Payload != null)
+                    await HandleTriggerAsync(message.Payload);
+            }
+        }
+        finally
+        {
+            await ping.DisposeAsync();
         }
     }
 
@@ -175,7 +221,6 @@ public class ExtensionService : IAsyncDisposable
         public int     BitsSpent  { get; set; }
         public string  ViewerName { get; set; } = string.Empty;
     }
-
     // ── Disposal ──────────────────────────────────────────────────────────────
 
     public async ValueTask DisposeAsync()

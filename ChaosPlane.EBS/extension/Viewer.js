@@ -31,6 +31,9 @@ document.getElementById('btnSevere').addEventListener('click',   () => selectTie
 document.getElementById('btnCancel').addEventListener('click',  closeModal);
 document.getElementById('btnConfirm').addEventListener('click', confirmTrigger);
 
+// Wire up search bar
+document.getElementById('searchInput').addEventListener('input', e => filterFailures(e.target.value));
+
 // Load catalogue and initialise status checking every 30 seconds
 loadCatalogue();
 

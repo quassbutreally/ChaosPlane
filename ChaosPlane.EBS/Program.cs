@@ -86,10 +86,4 @@ app.MapPost("/active-failures", async (HttpContext ctx, PubSubService pubsub) =>
 app.MapGet("/status", (RelayService relay) =>
     Results.Ok(new { online = relay.IsDesktopConnected }));
 
-app.MapGet("/test-pubsub", async (PubSubService pubsub) =>
-{
-    await pubsub.BroadcastActiveFailuresAsync(new[] { "test_failure_id" });
-    return Results.Ok(new { sent = true });
-});
-
 app.Run();

@@ -18,8 +18,8 @@ namespace ChaosPlane.ViewModels;
 public partial class DashboardViewModel : ObservableObject
 {
     private readonly FailureOrchestrator _orchestrator;
-    private readonly TwitchService       _twitchService;
     private readonly XPlaneService       _xplaneService;
+    private readonly ExtensionService    _extensionService;
 
     private const int MaxLogEntries = 50;
 
@@ -60,12 +60,12 @@ public partial class DashboardViewModel : ObservableObject
 
     public DashboardViewModel(
         FailureOrchestrator orchestrator,
-        TwitchService       twitchService,
-        XPlaneService       xplaneService)
+        XPlaneService       xplaneService,
+        ExtensionService    extensionService)
     {
-        _orchestrator  = orchestrator;
-        _twitchService = twitchService;
-        _xplaneService = xplaneService;
+        _orchestrator     = orchestrator;
+        _xplaneService    = xplaneService;
+        _extensionService = extensionService;
 
         _orchestrator.FailureReset += OnFailureReset;
     }
@@ -89,6 +89,7 @@ public partial class DashboardViewModel : ObservableObject
 
             AddLog(label, LogEntryKind.Triggered);
             LastEventText = label;
+            PublishActiveFailures();
         });
     }
 
@@ -112,6 +113,7 @@ public partial class DashboardViewModel : ObservableObject
 
             ActiveFailureCount = ActiveFailures.Count;
             AddLog($"✅ Reset: {triggered.Name}", LogEntryKind.Reset);
+            PublishActiveFailures();
         });
     }
 
@@ -174,12 +176,22 @@ public partial class DashboardViewModel : ObservableObject
     /// </summary>
     public void ClearActiveFailures()
     {
-        ActiveFailures.Clear();
-        ActiveFailureCount = 0;
-        AddLog("X-Plane disconnected — active failures cleared", LogEntryKind.System);
+        App.DispatchToUi(() =>
+        {
+            ActiveFailures.Clear();
+            ActiveFailureCount = 0;
+            AddLog("X-Plane disconnected — active failures cleared", LogEntryKind.System);
+            PublishActiveFailures();
+        });
     }
 
     // ── Private helpers ───────────────────────────────────────────────────────
+
+    private void PublishActiveFailures()
+    {
+        var ids = ActiveFailures.Select(a => a.Triggered.Failure.Id).ToList();
+        _ = _extensionService.PublishActiveFailuresAsync(ids);
+    }
 
     private async Task ResetFailureAsync(ActiveFailureViewModel active)
     {
@@ -247,7 +259,7 @@ public partial class ActiveFailureViewModel : ObservableObject
     public string           Name          { get; }
     public string           RedeemedBy    { get; }
     public string           TierLabel     { get; }
-    private DateTimeOffset   TriggeredAt   { get; }
+    public DateTimeOffset   TriggeredAt   { get; }
     public bool             WasPickYourPoison { get; }
 
     public string TimeAgo =>
@@ -255,18 +267,25 @@ public partial class ActiveFailureViewModel : ObservableObject
         {
             { TotalSeconds: < 60 }  t => $"{(int)t.TotalSeconds}s ago",
             { TotalMinutes: < 60 }  t => $"{(int)t.TotalMinutes}m ago",
-            var                   t => $"{(int)t.TotalHours}h ago"
+            var                      t => $"{(int)t.TotalHours}h ago"
         };
 
     [RelayCommand]
     private async Task ResetAsync() => await _resetCallback(this);
 }
 
-public class LogEntryViewModel(string text, LogEntryKind kind)
+public class LogEntryViewModel
 {
-    public string         Text      { get; } = text;
-    public LogEntryKind   Kind      { get; } = kind;
-    private DateTimeOffset Timestamp { get; } = DateTimeOffset.Now;
+    public LogEntryViewModel(string text, LogEntryKind kind)
+    {
+        Text      = text;
+        Kind      = kind;
+        Timestamp = DateTimeOffset.Now;
+    }
+
+    public string         Text      { get; }
+    public LogEntryKind   Kind      { get; }
+    public DateTimeOffset Timestamp { get; }
     public string         TimeLabel => Timestamp.ToString("HH:mm:ss");
 }
 

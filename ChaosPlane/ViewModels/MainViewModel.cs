@@ -71,7 +71,7 @@ public partial class MainViewModel : ObservableObject
         _orchestrator     = orchestrator;
 
         FailureBrowser = new FailureBrowserViewModel(catalogueService, configService);
-        Dashboard      = new DashboardViewModel(orchestrator, twitchService, xplaneService);
+        Dashboard      = new DashboardViewModel(orchestrator, xplaneService, extensionService);
 
         // Wire up service events
         _twitchService.ConnectionChanged    += OnTwitchConnectionChanged;
