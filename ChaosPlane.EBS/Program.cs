@@ -9,19 +9,11 @@ builder.Services.Configure<TwitchConfig>(
 
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<RelayService>();
-
-builder.Services.AddCors();
+builder.Services.AddSingleton<PubSubService>();
 
 // ── App ───────────────────────────────────────────────────────────────────────
 
 var app = builder.Build();
-
-// Cors
-
-app.UseCors(policy => policy
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
 
 // WebSocket support
 app.UseWebSockets();
@@ -46,9 +38,13 @@ app.MapPost("/trigger", async (HttpContext ctx, JwtService jwt, RelayService rel
 {
     // Verify the Twitch JWT from the Authorization header
     var token = ctx.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
-    
     var claims = jwt.Verify(token);
-    if (claims == null) { ctx.Response.StatusCode = 401; return; }
+
+    if (claims == null)
+    {
+        ctx.Response.StatusCode = 401;
+        return;
+    }
 
     var body = await ctx.Request.ReadFromJsonAsync<TriggerRequest>();
     if (body == null)
@@ -64,8 +60,19 @@ app.MapPost("/trigger", async (HttpContext ctx, JwtService jwt, RelayService rel
 // Health check for Railway
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
-// Status of app
-app.MapGet("/status", (RelayService relay) =>
-    Results.Ok(new { online = relay.IsDesktopConnected }));
+// ChaosPlane posts active failure IDs here after each trigger/reset
+// EBS broadcasts them to the extension via Twitch pubsub
+app.MapPost("/active-failures", async (HttpContext ctx, PubSubService pubsub) =>
+{
+    var body = await ctx.Request.ReadFromJsonAsync<ActiveFailuresMessage>();
+    if (body == null)
+    {
+        ctx.Response.StatusCode = 400;
+        return;
+    }
+
+    await pubsub.BroadcastActiveFailuresAsync(body.FailureIds);
+    ctx.Response.StatusCode = 200;
+});
 
 app.Run();

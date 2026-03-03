@@ -40,3 +40,11 @@ public class RelayMessage
     public string        Type    { get; set; } = string.Empty; // "trigger"
     public TriggerRequest? Payload { get; set; }
 }
+
+/// <summary>
+/// Posted by ChaosPlane to /active-failures to broadcast current state.
+/// </summary>
+public class ActiveFailuresMessage
+{
+    public List<string> FailureIds { get; set; } = [];
+}
