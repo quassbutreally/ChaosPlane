@@ -11,9 +11,16 @@ builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<RelayService>();
 builder.Services.AddSingleton<PubSubService>();
 
+builder.Services.AddCors();
+
 // ── App ───────────────────────────────────────────────────────────────────────
 
 var app = builder.Build();
+
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 // WebSocket support
 app.UseWebSockets();
@@ -74,5 +81,9 @@ app.MapPost("/active-failures", async (HttpContext ctx, PubSubService pubsub) =>
     await pubsub.BroadcastActiveFailuresAsync(body.FailureIds);
     ctx.Response.StatusCode = 200;
 });
+
+// Status
+app.MapGet("/status", (RelayService relay) =>
+    Results.Ok(new { online = relay.IsDesktopConnected }));
 
 app.Run();
