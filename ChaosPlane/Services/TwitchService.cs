@@ -4,6 +4,7 @@ using TwitchLib.Api.Core.Enums;
 using TwitchLib.Api.Helix.Models.ChannelPoints.CreateCustomReward;
 using TwitchLib.Api.Helix.Models.ChannelPoints.UpdateCustomReward;
 using TwitchLib.Api.Helix.Models.ChannelPoints.UpdateCustomRewardRedemptionStatus;
+using TwitchLib.Api.Helix.Models.EventSub;
 using TwitchLib.Client;
 using TwitchLib.Client.Models;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
@@ -18,17 +19,13 @@ namespace ChaosPlane.Services;
 ///   - EventSub WebSocket for real-time redemption events
 ///   - TwitchLib.Client for chat announcements and refunds
 /// </summary>
-public class TwitchService : IAsyncDisposable
+public class TwitchService(AppSettings settings, SettingsService settingsService) : IAsyncDisposable
 {
     private static string ClientId => Secrets.TwitchClientId;
-    private readonly AppSettings _settings;
-    private readonly SettingsService _settingsService;
 
     private TwitchAPI?               _api;
     private TwitchClient?            _chatClient;
     private EventSubWebsocketClient? _eventSub;
-
-    private bool _connected;
 
     // ── Events ────────────────────────────────────────────────────────────────
 
@@ -51,14 +48,9 @@ public class TwitchService : IAsyncDisposable
 
     // ── State ─────────────────────────────────────────────────────────────────
 
-    public bool IsConnected => _connected;
-    public string? ChannelName => _settings.Twitch.ChannelName;
+    public bool IsConnected { get; private set; }
 
-    public TwitchService(AppSettings settings, SettingsService settingsService)
-    {
-        _settings        = settings;
-        _settingsService = settingsService;
-    }
+    public string ChannelName => settings.Twitch.ChannelName;
 
     // ── OAuth ─────────────────────────────────────────────────────────────────
 
@@ -94,11 +86,11 @@ public class TwitchService : IAsyncDisposable
             var validation = await _api.Auth.ValidateAccessTokenAsync(accessToken);
             if (validation == null) return false;
 
-            _settings.Twitch.AccessToken       = accessToken;
-            _settings.Twitch.ChannelName       = validation.Login;
-            _settings.Twitch.BroadcasterUserId = validation.UserId;
+            settings.Twitch.AccessToken       = accessToken;
+            settings.Twitch.ChannelName       = validation.Login;
+            settings.Twitch.BroadcasterUserId = validation.UserId;
 
-            await _settingsService.SaveAsync();
+            await settingsService.SaveAsync();
             return true;
         }
         catch
@@ -115,29 +107,29 @@ public class TwitchService : IAsyncDisposable
     /// </summary>
     public async Task<bool> ConnectAsync()
     {
-        if (string.IsNullOrEmpty(_settings.Twitch.AccessToken))
+        if (string.IsNullOrEmpty(settings.Twitch.AccessToken))
             return false;
 
         try
         {
             _api = new TwitchAPI();
             _api.Settings.ClientId    = ClientId;
-            _api.Settings.AccessToken = _settings.Twitch.AccessToken;
+            _api.Settings.AccessToken = settings.Twitch.AccessToken;
 
             // Validate token is still good
-            var validation = await _api.Auth.ValidateAccessTokenAsync(_settings.Twitch.AccessToken);
+            var validation = await _api.Auth.ValidateAccessTokenAsync(settings.Twitch.AccessToken);
             if (validation == null) return false;
 
             await ConnectChatAsync();
             await ConnectEventSubAsync();
 
-            _connected = true;
+            IsConnected = true;
             ConnectionChanged?.Invoke(true);
             return true;
         }
         catch
         {
-            _connected = false;
+            IsConnected = false;
             ConnectionChanged?.Invoke(false);
             return false;
         }
@@ -154,7 +146,7 @@ public class TwitchService : IAsyncDisposable
         _chatClient?.Disconnect();
         _chatClient = null;
 
-        _connected = false;
+        IsConnected = false;
         ConnectionChanged?.Invoke(false);
     }
 
@@ -166,22 +158,22 @@ public class TwitchService : IAsyncDisposable
     /// </summary>
     public async Task CreateOrUpdateRewardsAsync()
     {
-        if (_api == null || string.IsNullOrEmpty(_settings.Twitch.BroadcasterUserId))
+        if (_api == null || string.IsNullOrEmpty(settings.Twitch.BroadcasterUserId))
             throw new InvalidOperationException("Must be connected to Twitch before managing rewards.");
 
-        var ids = _settings.Twitch.RewardIds;
+        var ids = settings.Twitch.RewardIds;
 
-        ids.Minor          = await UpsertRewardAsync(ids.Minor,          _settings.Rewards.Minor,          requiresInput: false);
-        ids.Moderate       = await UpsertRewardAsync(ids.Moderate,       _settings.Rewards.Moderate,       requiresInput: false);
-        ids.Severe         = await UpsertRewardAsync(ids.Severe,         _settings.Rewards.Severe,         requiresInput: false);
-        ids.PickYourPoison = await UpsertRewardAsync(ids.PickYourPoison,  _settings.Rewards.PickYourPoison, requiresInput: true);
+        ids.Minor          = await UpsertRewardAsync(ids.Minor,          settings.Rewards.Minor,          requiresInput: false);
+        ids.Moderate       = await UpsertRewardAsync(ids.Moderate,       settings.Rewards.Moderate,       requiresInput: false);
+        ids.Severe         = await UpsertRewardAsync(ids.Severe,         settings.Rewards.Severe,         requiresInput: false);
+        ids.PickYourPoison = await UpsertRewardAsync(ids.PickYourPoison,  settings.Rewards.PickYourPoison, requiresInput: true);
 
-        await _settingsService.SaveAsync();
+        await settingsService.SaveAsync();
     }
 
     private async Task<string> UpsertRewardAsync(string existingId, RewardConfig config, bool requiresInput)
     {
-        var broadcasterId = _settings.Twitch.BroadcasterUserId;
+        var broadcasterId = settings.Twitch.BroadcasterUserId;
 
         // Try to update existing reward first
         if (!string.IsNullOrEmpty(existingId))
@@ -249,13 +241,13 @@ public class TwitchService : IAsyncDisposable
     public void AnnounceFailure(TriggeredFailure triggered)
     {
         if (_chatClient == null || !_chatClient.IsConnected) return;
-        if (string.IsNullOrEmpty(_settings.Twitch.ChannelName)) return;
+        if (string.IsNullOrEmpty(settings.Twitch.ChannelName)) return;
 
         var message = triggered.WasPickYourPoison
             ? $"☠️ @{triggered.RedeemedBy} picked their poison: {triggered.Name}! Good luck! 💀"
             : $"⚠️ @{triggered.RedeemedBy} triggered a {triggered.TierLabel} failure: {triggered.Name}! Good luck! 🔥";
 
-        _chatClient.SendMessage(_settings.Twitch.ChannelName, message);
+        _chatClient.SendMessage(settings.Twitch.ChannelName, message);
     }
 
     /// <summary>
@@ -264,9 +256,9 @@ public class TwitchService : IAsyncDisposable
     public void AnnounceNoMatch(string viewerDisplayName, string input)
     {
         if (_chatClient == null || !_chatClient.IsConnected) return;
-        if (string.IsNullOrEmpty(_settings.Twitch.ChannelName)) return;
+        if (string.IsNullOrEmpty(settings.Twitch.ChannelName)) return;
 
-        _chatClient.SendMessage(_settings.Twitch.ChannelName,
+        _chatClient.SendMessage(settings.Twitch.ChannelName,
             $"@{viewerDisplayName} — no matching failure found for \"{input}\". Points refunded!");
     }
 
@@ -282,7 +274,7 @@ public class TwitchService : IAsyncDisposable
         try
         {
             await _api.Helix.ChannelPoints.UpdateRedemptionStatusAsync(
-                _settings.Twitch.BroadcasterUserId,
+                settings.Twitch.BroadcasterUserId,
                 rewardId,
                 [redemptionId],
                 new UpdateCustomRewardRedemptionStatusRequest
@@ -306,7 +298,7 @@ public class TwitchService : IAsyncDisposable
         try
         {
             await _api.Helix.ChannelPoints.UpdateRedemptionStatusAsync(
-                _settings.Twitch.BroadcasterUserId,
+                settings.Twitch.BroadcasterUserId,
                 rewardId,
                 [redemptionId],
                 new UpdateCustomRewardRedemptionStatusRequest
@@ -325,11 +317,11 @@ public class TwitchService : IAsyncDisposable
     private Task ConnectChatAsync()
     {
         var credentials = new ConnectionCredentials(
-            _settings.Twitch.ChannelName,
-            $"oauth:{_settings.Twitch.AccessToken}");
+            settings.Twitch.ChannelName,
+            $"oauth:{settings.Twitch.AccessToken}");
 
         _chatClient = new TwitchClient();
-        _chatClient.Initialize(credentials, _settings.Twitch.ChannelName);
+        _chatClient.Initialize(credentials, settings.Twitch.ChannelName);
         _chatClient.Connect();
 
         return Task.CompletedTask;
@@ -348,7 +340,7 @@ public class TwitchService : IAsyncDisposable
         await _eventSub.ConnectAsync();
     }
 
-    private async Task OnWebsocketConnected(object sender, TwitchLib.EventSub.Websockets.Core.EventArgs.WebsocketConnectedArgs e)
+    private async Task OnWebsocketConnected(object? sender, TwitchLib.EventSub.Websockets.Core.EventArgs.WebsocketConnectedArgs e)
     {
         if (!e.IsRequestedReconnect)
         {
@@ -356,8 +348,12 @@ public class TwitchService : IAsyncDisposable
             // This prevents duplicate triggers if ConnectAsync is called more than once.
             try
             {
-                var existing = await _api!.Helix.EventSub.GetEventSubSubscriptionsAsync(
-                    type: "channel.channel_points_custom_reward_redemption.add");
+                GetEventSubSubscriptionsRequest request = new()
+                {
+                    Type = "channel.channel_points_custom_reward_redemption"
+                };
+
+                var existing = await _api!.Helix.EventSub.GetEventSubSubscriptionsAsync(request);
 
                 foreach (var sub in existing.Subscriptions)
                     await _api.Helix.EventSub.DeleteEventSubSubscriptionAsync(sub.Id);
@@ -372,28 +368,28 @@ public class TwitchService : IAsyncDisposable
                 "1",
                 new Dictionary<string, string>
                 {
-                    ["broadcaster_user_id"] = _settings.Twitch.BroadcasterUserId
+                    ["broadcaster_user_id"] = settings.Twitch.BroadcasterUserId
                 },
-                TwitchLib.Api.Core.Enums.EventSubTransportMethod.Websocket,
+                EventSubTransportMethod.Websocket,
                 _eventSub!.SessionId);
         }
     }
 
-    private Task OnWebsocketDisconnected(object sender, EventArgs e)
+    private Task OnWebsocketDisconnected(object? sender, EventArgs e)
     {
-        _connected = false;
+        IsConnected = false;
         ConnectionChanged?.Invoke(false);
         return Task.CompletedTask;
     }
 
-    private async Task OnRedemptionAsync(object sender, ChannelPointsCustomRewardRedemptionArgs e)
+    private async Task OnRedemptionAsync(object? sender, ChannelPointsCustomRewardRedemptionArgs e)
     {
         var notification = e.Payload.Event;
         var rewardId     = notification.Reward.Id;
         var redemptionId = notification.Id;
         var viewerName   = notification.UserName;
-        var userInput    = notification.UserInput ?? string.Empty;
-        var ids          = _settings.Twitch.RewardIds;
+        var userInput    = notification.UserInput;
+        var ids          = settings.Twitch.RewardIds;
 
         if (rewardId == ids.PickYourPoison)
         {
@@ -418,10 +414,10 @@ public class TwitchService : IAsyncDisposable
     // ── Reward ID helpers (used by FailureOrchestrator) ──────────────────────
 
     public string? GetRewardIdForTier(FailureTier tier) =>
-        _settings.Twitch.RewardIds.GetForTier(tier) is { Length: > 0 } id ? id : null;
+        settings.Twitch.RewardIds.GetForTier(tier) is { Length: > 0 } id ? id : null;
 
     public string? GetPickYourPoisonRewardId() =>
-        _settings.Twitch.RewardIds.PickYourPoison is { Length: > 0 } id ? id : null;
+        settings.Twitch.RewardIds.PickYourPoison is { Length: > 0 } id ? id : null;
 
     // ── Disposal ──────────────────────────────────────────────────────────────
 
