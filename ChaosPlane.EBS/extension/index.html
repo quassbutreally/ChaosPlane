@@ -32,10 +32,11 @@
             color: var(--text);
             font-family: var(--sans);
             font-weight: 300;
-            height: 500px;
+            height: 800px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         /* ── Header ── */
@@ -109,13 +110,15 @@
 
         .content {
             flex: 1;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border) transparent;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
         }
 
-        .pane { display: none; height: 100%; }
-        .pane.active { display: flex; flex-direction: column; }
+        .pane { display: none; flex: 1; min-height: 0; flex-direction: column; overflow: hidden; }
+        .pane.active { display: flex; }
 
         /* ── Tier pane ── */
 
@@ -201,9 +204,9 @@
 
         .desc-bar {
             flex-shrink: 0;
+            height: 56px;
             border-top: 1px solid var(--border);
             padding: 8px 12px;
-            min-height: 48px;
             background: var(--panel);
         }
 
@@ -219,6 +222,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 8px;
+            min-height: 0;  /* add this */
         }
 
         .failure-item {

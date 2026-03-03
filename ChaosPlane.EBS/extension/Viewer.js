@@ -167,15 +167,14 @@ function renderFailureList(query) {
     `;
 
         if (!isActive) {
-            item.onclick = () => selectSpecific(failure);
+            item.addEventListener('click', () => selectSpecific(failure));
+            item.addEventListener('mouseenter', () => {
+                document.getElementById('descBarText').textContent = failure.description || '—';
+            });
+            item.addEventListener('mouseleave', () => {
+                document.getElementById('descBarText').textContent = '// HOVER A FAILURE FOR DETAILS';
+            });
         }
-
-        item.addEventListener('mouseenter', () => {
-            document.getElementById('descBarText').textContent = failure.description || '—';
-        });
-        item.addEventListener('mouseleave', () => {
-            document.getElementById('descBarText').textContent = '// HOVER A FAILURE FOR DETAILS';
-        });
 
         list.appendChild(item);
     }
