@@ -199,6 +199,22 @@
         .search-input:focus { border-color: var(--amber-dim); }
         .search-input::placeholder { color: var(--text-muted); }
 
+        .desc-bar {
+            flex-shrink: 0;
+            border-top: 1px solid var(--border);
+            padding: 8px 12px;
+            min-height: 48px;
+            background: var(--panel);
+        }
+
+        .desc-bar-text {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            letter-spacing: 0.03em;
+        }
+
         .failure-list {
             flex: 1;
             overflow-y: auto;
@@ -372,6 +388,39 @@
             font-size: 11px;
             text-align: center;
         }
+        
+        /* offline overlay */
+        .offline-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(13,15,14,0.85);
+            z-index: 50;
+        }
+
+        .offline-overlay.visible { display: flex; align-items: center; justify-content: center; }
+        
+        /* toast */
+        .toast {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--amber);
+            color: #000;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            padding: 8px 16px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 200;
+            white-space: nowrap;
+        }
+
+        .toast.visible { opacity: 1; }
     </style>
 </head>
 <body>
@@ -430,6 +479,9 @@
                    placeholder="SEARCH FAILURES..." />
         </div>
         <div class="failure-list" id="failureList"></div>
+        <div class="desc-bar" id="descBar">
+            <div class="desc-bar-text" id="descBarText">// HOVER A FAILURE FOR DETAILS</div>
+        </div>
     </div>
 
 </div>
@@ -446,6 +498,15 @@
         </div>
     </div>
 </div>
+
+<!-- Offline overlay -->
+<div class="offline-overlay" id="offlineOverlay">
+    <div class="not-connected">
+        <div class="not-connected-icon">✈</div>
+        <div class="not-connected-text">STREAMER OFFLINE<br/>// ChaosPlane is not running</div>
+    </div>
+</div>
+
 <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
 <script src="Viewer.js"></script>
 </body>

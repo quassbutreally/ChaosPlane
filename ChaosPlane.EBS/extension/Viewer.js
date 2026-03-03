@@ -70,15 +70,7 @@ async function checkStatus() {
 }
 
 function setOnline(online) {
-    const btns = document.querySelectorAll('.tier-btn');
-    btns.forEach(b => b.disabled = !online);
-
-    // Grey out the whole browse pane if offline
-    document.getElementById('failureList').style.pointerEvents = online ? 'auto' : 'none';
-    document.getElementById('failureList').style.opacity       = online ? '1'    : '0.35';
-    document.getElementById('searchInput').disabled            = !online;
-
-    // Update subtitle to show offline state
+    document.getElementById('offlineOverlay').classList.toggle('visible', !online);
     document.querySelector('.subtitle').textContent = online
         ? '// CL650 FAILURE SYSTEM'
         : '// STREAMER OFFLINE';
@@ -95,7 +87,8 @@ async function loadCatalogue() {
             id:       f.Id,
             name:     f.Name,
             category: f.Category,
-            tier:     f.SuggestedTier || null
+            tier:     f.SuggestedTier || null,
+            description: f.Description || ''
         }));
 
         renderFailureList('');
@@ -177,6 +170,13 @@ function renderFailureList(query) {
             item.onclick = () => selectSpecific(failure);
         }
 
+        item.addEventListener('mouseenter', () => {
+            document.getElementById('descBarText').textContent = failure.description || '—';
+        });
+        item.addEventListener('mouseleave', () => {
+            document.getElementById('descBarText').textContent = '// HOVER A FAILURE FOR DETAILS';
+        });
+
         list.appendChild(item);
     }
 }
@@ -219,6 +219,12 @@ function confirmTrigger() {
         onFulfilled: () => { sendTriggerToEbs(pendingTrigger); closeModal(); },
         onCancelled: () => { closeModal(); }
     });
+
+    onFulfilled: () => {
+        sendTriggerToEbs(pendingTrigger);
+        showToast('✈ FAILURE TRIGGERED');
+        closeModal();
+    }
 }
 
 function getProductSku(trigger) {
@@ -245,6 +251,20 @@ async function sendTriggerToEbs(trigger) {
             body: JSON.stringify(body)
         });
     } catch (e) {}
+}
+
+// ── Toast ───────────────────────────────────────────────────────────────────
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('visible'), 10);
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
